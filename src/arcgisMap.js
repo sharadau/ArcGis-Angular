@@ -13,7 +13,7 @@ angular.module("arcgis-map",[])
                     //if($document.getElementById($attrs.mapid)){
                     //    throw new Error('ID already exists!')
                     //}
-                    $element.append("<div id="+$attrs.mapid+"></div>");
+                    $element.append("<div style='width:100%;height:100%;' id="+$attrs.mapid+"></div>");
                 }
                 return function(scope,element,attrs){
                     //TODO - documentation
@@ -51,6 +51,7 @@ angular.module("arcgis-map",[])
                         //if   - Add documentation
                         map.on("load",function(){
                             mapLoadedDeffred.resolve(map);
+
                         });
 
 
