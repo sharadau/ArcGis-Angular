@@ -28,14 +28,17 @@ angular.module("arcgis-map",[])
 
                 var mapOptions = {
                     zoom: 13,
-                    center: [-118,34.5],
+                    center: {
+                        lng: -122.45,
+                        lat: 37.75
+                    },
                     basemap: "topo" /*delorme, hybrid, satellite*/
                 }
                 /*Set mapoptions if it is set as attribute*/
                 if(attrs.zoom){
                     mapOptions.zoom = attrs.zoom;
                 }
-                if (scope.center.lng && scope.center.lat) {
+                if (attrs.center.lng && attrs.center.lat) {
                     mapOptions.center = [scope.center.lng, scope.center.lat];
                 } else if(attrs.center){
                     mapOptions.center = attrs.center;
@@ -54,21 +57,28 @@ angular.module("arcgis-map",[])
                             map.setBasemap(newBasemap);
                         }
                     });
-
+                    scope.inputChangeFlag = false;
                     scope.$watch(function(scope){
                         return [scope.center.lng,scope.center.lat, scope.zoom].join(',');
 
                     }, function(newCenterZoom,oldCenterZoom){
+                        if(scope.inputChangeFlag){
+                            return;
+                        }
+                        scope.inputChangeFlag = true;
                         newCenterZoom = newCenterZoom.split(',');
-
-                        console.log("change : "+newCenterZoom)
 
                         if( newCenterZoom[0] !== '' && newCenterZoom[1] !== '' && newCenterZoom[2] !== '' )
                         {
                             map.centerAndZoom([newCenterZoom[0], newCenterZoom[1]], newCenterZoom[2]);
+                            scope.inputChangeFlag = false;
                         }
                     });
                     map.on('extent-change', function(e){
+                        if(scope.inputChangeFlag){
+                            return;
+                        }
+                        scope.inputChangeFlag = true;
                         scope.$apply(function(){
                             var geoCenter = map.geographicExtent.getCenter();
                             scope.center.lng = geoCenter.x;
@@ -80,8 +90,7 @@ angular.module("arcgis-map",[])
                                 scope.extentChange()(e);
                             }
                             $timeout(function(){
-                                // this will be executed after the $digest cycle
-                                console.log('after apply()');
+                                scope.inputChangeFlag = false;
                             },0);
                         });
                     });
