@@ -3,16 +3,6 @@
  */
 
 angular.module("arcgis-map",[])
-    .controller('MapController', function ($scope) {
-        $scope.map = {
-            center: {
-                lng: -122.45,
-                lat: 37.75
-            },
-            zoom: 12,
-            basemap: 'topo'
-        };
-    })
     .directive("arcgisMap",function($q,$timeout){
         return {
             restrict: 'E',
@@ -20,20 +10,12 @@ angular.module("arcgis-map",[])
             scope: {
               zoom: '=',
               center: '=',
-              basemap: '@',
-              extentChange: '&'
+              basemap: '@'
             },
             link:function(scope,element,attrs){
                 var mapDeferred = $q.defer();
 
-                var mapOptions = {
-                    zoom: 13,
-                    center: {
-                        lng: -122.45,
-                        lat: 37.75
-                    },
-                    basemap: "topo" /*delorme, hybrid, satellite*/
-                }
+                var mapOptions = {};
                 /*Set mapoptions if it is set as attribute*/
                 if(attrs.zoom){
                     mapOptions.zoom = attrs.zoom;
@@ -46,11 +28,12 @@ angular.module("arcgis-map",[])
                 if(attrs.basemap){
                     mapOptions.basemap = attrs.basemap;
                 }
-
+                /*Created esri map object using esri/map library*/
                 require(["esri/map"],function(Map){
                     var map = new Map("mapId",mapOptions);
                     mapDeferred.resolve(map);
                 });
+
                 mapDeferred.promise.then(function(map){
                     scope.$watch('basemap', function(newBasemap, oldBasemap) {
                         if (map.loaded && newBasemap !== oldBasemap) {
@@ -85,7 +68,6 @@ angular.module("arcgis-map",[])
                             scope.center.lat = geoCenter.y;
                             scope.zoom = map.getZoom();
 
-                            // we might want to execute event handler even if $scope.inUpdateCycle is true
                             if( attrs.extentChange ) {
                                 scope.extentChange()(e);
                             }
@@ -95,8 +77,6 @@ angular.module("arcgis-map",[])
                         });
                     });
                 });
-
-
             }
         }
     });
