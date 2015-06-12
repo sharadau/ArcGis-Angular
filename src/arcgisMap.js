@@ -5,14 +5,25 @@
 angular.module("arcgis-map",[])
     .directive("arcgisMap",function(){
         return {
+            template: "<div id='mapId'></div>",
             link:function(scope,element,attrs){
-                element.append('<div  id=' +"mapId" + '></div>');
+                var mapOptions = {
+                    zoom: 13,
+                    center: [-118,34.5],
+                    basemap: "topo" /*delorme, hybrid, satellite*/
+                }
+                /*Set mapoptions if it is set as attribute*/
+                if(attrs.zoom){
+                    mapOptions.zoom = attrs.zoom;
+                }
+                if(attrs.center){
+                    mapOptions.center = attrs.center;
+                }
+                if(attrs.basemap){
+                    mapOptions.basemap = attrs.basemap;
+                }
                 require(["esri/map"],function(Map){
-                    var mapWdt = new Map("mapId",{
-                        center: [-118, 34.5],
-                        zoom: 8,
-                        basemap: "topo"
-                    });
+                    var mapWdt = new Map("mapId",mapOptions);
                 });
             }
         }
