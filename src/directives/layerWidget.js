@@ -9,9 +9,10 @@ angular.module("arcgis-map")
                 mapid: "@"
             },
             //templateUrl: "layerTemplate.html",
-            template: '<div style="border:1px solid blue;width:100%;height:100%">' +
-            '<div style="border-bottom:1px solid blue;width:100%;height:30px;" ng-repeat="layer in layers"><layer-item layer="layer"></layer-item></div>' +
-            '</div>',
+            //template: '<div style="border:1px solid blue;width:100%;height:100%">' +
+            //'<div style="border-bottom:1px solid blue;width:100%;height:30px;" ng-repeat="layer in layers"><layer-item layer="layer"></layer-item></div>' +
+            //'</div>',
+            templateUrl:"../src/template/layerWidget.html",
             controller: function ($scope) {
 
                 $scope.$watch("layers",function(newarray,oldarray){

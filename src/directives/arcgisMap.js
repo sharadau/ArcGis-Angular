@@ -4,7 +4,7 @@
 
 
 angular.module("arcgis-map")
-    .directive("arcgisMap",["$q","$timeout","$document","mapRegistry",function($q,$timeout,$document,mapRegistry){
+    .directive("arcgisMap",["$q","$timeout","$document","mapRegistry","$window",function($q,$timeout,$document,mapRegistry,$window){
 
         return {
             restrict: 'E',
@@ -21,6 +21,8 @@ angular.module("arcgis-map")
                     if($document[0].getElementById($attrs.mapid)){
                         throw new Error('ID already exists!')
                     }
+                    $element.parent().css( "height", ($window.innerHeight - 64)+"px" );
+
                     $element.append("<div style='width:100%;height:100%;' id="+$attrs.mapid+"></div>");
                 }
 

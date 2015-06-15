@@ -9,6 +9,7 @@ angular.module("arcgis-map")
                 hidden:"@"
             },
             controller:function($scope,$element,$attrs){
+                $scope.selected = true;
                 $scope.isVisible  =function(){
                     if($scope.hidden){
                         return !$scope.hidden;
@@ -32,7 +33,17 @@ angular.module("arcgis-map")
 
                     $scope.hidden = !$scope.layer.layer.visibleAtMapScale;
                 });
+
+                $scope.setVisible = function(selected){
+                    if($scope.selected){
+                        $scope.layer.layer.show();
+                    }else{
+                        $scope.layer.layer.hide();
+                    }
+
+                };
             },
-            template:"<div ng-class='{hiddenLayer: hidden , availabelLayer: isVisible(), hiddenLayer:isHidden()}'>{{layer.name}}</div>"
+           // template:"<div ng-class='{hiddenLayer: hidden , availabelLayer: isVisible(), hiddenLayer:isHidden()}'>{{layer.name}}</div>"
+            templateUrl:"../src/template/layerItem.html"
         }
     }]);
