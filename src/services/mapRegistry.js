@@ -88,6 +88,13 @@ angular.module("arcgis-map",[])
 
             getLayers: function(mapid){
                 return mapLayers[mapid];
+            },
+
+            selectBaseMap: function(mapid,basemapid){
+                var mappromise = this.get(mapid);
+                mappromise.then(function(map){
+                    //map.setbaSEmaP();
+                });
             }
         };
     }]);
