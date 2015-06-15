@@ -162,8 +162,8 @@ angular.module("arcgis-map")
 
                             if( newCenter[0] !== '' && newCenter[1] !== '' )
                             {
-                                //map.centerAndZoom([parseFloat(newCenter[0]), parseFloat(newCenter[1])],scope.zoom);
-                                map.centerAt([parseFloat(newCenter[0]), parseFloat(newCenter[1])], map.spatialReference);
+                                map.centerAndZoom([parseFloat(newCenter[0]), parseFloat(newCenter[1])],$scope.zoom);
+                                //map.centerAt([parseFloat(newCenter[0]), parseFloat(newCenter[1])], map.spatialReference);
                                 $scope.inputChangeFlag = false;
                             }
                         });
