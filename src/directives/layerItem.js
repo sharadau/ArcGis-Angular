@@ -13,14 +13,14 @@ angular.module("arcgis-map")
                     if($scope.hidden){
                         return !$scope.hidden;
                     }
-                    return $scope.layer.visible;
+                    return $scope.layer.layer.visibleAtMapScale;
                 };
 
                 $scope.isHidden  =function(){
                     if($scope.hidden){
                         return $scope.hidden;
                     }
-                    return !$scope.layer.visible;
+                    return !$scope.layer.layer.visibleAtMapScale;
                 }
 
                 $scope.$watch("hidden",function(newvalue,oldvalue){
