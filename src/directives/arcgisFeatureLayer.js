@@ -20,8 +20,7 @@ angular.module("arcgis-map")
                 require([
                     'esri/layers/FeatureLayer'], function (FeatureLayer) {
 
-                    var layer = new FeatureLayer($attrs.url,{
-                        mode: FeatureLayer.MODE_AUTO});
+                    var layer = new FeatureLayer($attrs.url);
 
 
                     layerDeferred.resolve(layer);
