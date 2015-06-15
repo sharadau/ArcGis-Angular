@@ -10,7 +10,14 @@ angular.module("arcgis-map")
         },
         zoom: 14,
         basemap: 'topo',
-        layers:null
+        layers:null,
+        options: {
+            navigationMode: 'classic', //css-transforms
+                sliderOrientation: 'horizontal',
+                sliderPosition: 'top-right',
+                fadeOnZoom: false,
+                resizeDelay: 500
+        }
     };
 })
 

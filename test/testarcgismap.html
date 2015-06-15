@@ -46,7 +46,7 @@
 
 
 <div style="float:left;margin:0 auto;width:1000px;height:600px;border:2px solid red;">
-    <arcgis-map layers="map.layers" mapid="myMapId" center="map.center" zoom="map.zoom" basemap="{{map.basemap}}">
+    <arcgis-map layers="map.layers" mapid="myMapId" center="map.center" zoom="map.zoom" basemap="{{map.basemap}}" options="{{map.options}}">
        <arcgis-fetaure-layer url="http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0">
 
         </arcgis-fetaure-layer>
@@ -63,9 +63,8 @@
 
         </arcgis-fetaure-layer>
 
-        <arcgis-fetaure-layer url="http://54.221.225.213/arcgis/rest/services/QuantumPlatform/Voice/FeatureServer/0">
+        <select-base-map></select-base-map>
 
-        </arcgis-fetaure-layer>
     </arcgis-map>
 </div>
 
@@ -79,7 +78,9 @@
 <script src="../src/directives/layerWidget.js"></script>
 <script src="../src/directives/layerItem.js"></script>
 
+<script src="../src/directives/baseMap.js"></script>
 
 <script src="testController.js"></script>
+
 </body>
 </html>
