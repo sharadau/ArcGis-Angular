@@ -9,6 +9,13 @@ angular.module("arcgis-map")
             lat: 37.75
         },
         zoom: 12,
-        basemap: 'topo'
+        basemap: 'topo',
+        options: {
+            navigationMode: 'classic', //css-transforms
+            sliderOrientation: 'horizontal',
+            sliderPosition: 'top-right',
+            fadeOnZoom: false,
+            resizeDelay: 500
+        }
     };
 })
