@@ -35,8 +35,8 @@ angular.module("arcgis-map")
                // var mapLoadedDeffred = $q.defer();
 
                 // add this map to the registry
-                if($attrs.registerAs){
-                    var deregister = mapRegistry._register($attrs.registerAs, mapDeferred);
+                if($attrs.mapid){
+                    var deregister = mapRegistry._register($attrs.mapid, mapDeferred);
 
                     // remove this from the registry when the scope is destroyed
                     $scope.$on('$destroy', deregister);
@@ -136,10 +136,11 @@ angular.module("arcgis-map")
                 };
 
                 // adds the layer, returns the promise that will be resolved with the result of map.addLayer
-                this.addLayer = function(layer) {
-                    return this.getMap().then(function(map) {
-                        return map.addLayer(layer);
-                    });
+                this.addLayer = function(url,layerName) {
+                    //return this.getMap().then(function(map) {
+                    //    return map.addLayer(layer);
+                    //});
+                    mapRegistry.addLayer($attrs.mapid,url)
                 };
 
 

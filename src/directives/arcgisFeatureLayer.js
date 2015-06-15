@@ -12,38 +12,43 @@ angular.module("arcgis-map")
 
             // define an interface for working with this directive
             controller: function ($scope, $element, $attrs) {
-                var layerDeferred = $q.defer();
-                if(!$attrs.url){
-                    throw new Error("Layer URL not found");
-                }
-
-                require([
-                    'esri/layers/FeatureLayer'], function (FeatureLayer) {
-
-                    var layer = new FeatureLayer($attrs.url);
-
-
-                    layerDeferred.resolve(layer);
-                });
-
-                // return the defered that will be resolved with the feature layer
-                this.getLayer = function () {
-                    return layerDeferred.promise;
-                };
+                //var layerDeferred = $q.defer();
+                //if(!$attrs.url){
+                //    throw new Error("Layer URL not found");
+                //}
+                //
+                //require([
+                //    'esri/layers/FeatureLayer'], function (FeatureLayer) {
+                //
+                //    var layer = new FeatureLayer($attrs.url);
+                //
+                //
+                //    layerDeferred.resolve(layer);
+                //});
+                //
+                //// return the defered that will be resolved with the feature layer
+                //this.getLayer = function () {
+                //    return layerDeferred.promise;
+                //};
             },
             // now we can link our directive to the scope, but we can also add it to the map..
             link: function (scope, element, attrs, controllers) {
-                // controllers is now an array of the controllers from the 'require' option
-                var layerController = controllers[0];
+                if(!attrs.url){
+                    throw new Error("Layer URL not found");
+                }
                 var mapController = controllers[1];
-
-                layerController.getLayer().then(function (layer) {
-                    // add layer
-                    mapController.addLayer(layer);
-
-                    // return the layer
-                    return layer;
-                });
+                mapController.addLayer(attrs.url);
+                // controllers is now an array of the controllers from the 'require' option
+                //var layerController = controllers[0];
+                //var mapController = controllers[1];
+                //
+                //layerController.getLayer().then(function (layer) {
+                //    // add layer
+                //    mapController.addLayer(attrs.url);
+                //
+                //    // return the layer
+                //    //return layer;
+                //});
             }
 
         };

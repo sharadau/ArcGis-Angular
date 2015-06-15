@@ -5,8 +5,9 @@
  */
 
 angular.module("arcgis-map",[])
-    .factory("mapRegistry",["$q",function($q){
+    .factory("mapRegistry",["$q","$rootScope",function($q,$rootScope){
         var registry = {};
+        var mapLayers = {};
         return {
             _register: function(name, deferred){
                 // if there isn't a promise in the registry yet make one...
@@ -50,6 +51,43 @@ angular.module("arcgis-map",[])
                 registry[name] = deferred;
 
                 return deferred.promise;
+            },
+
+            addLayer: function(mapid,layerURL){
+                var mappromise = this.get(mapid);
+                mappromise.then(function(map){
+                    require([
+                        'esri/layers/FeatureLayer'], function (FeatureLayer) {
+                        var layer = new FeatureLayer(layerURL);
+                        map.addLayer(layer);
+                        layer.on("load",function(event){
+                            if(!mapLayers[mapid]){
+                                mapLayers[mapid] = [{
+                                    name:event.layer.name,
+                                    layer: event.layer,
+                                    visible:true
+                                }];
+                            }else{
+                                mapLayers[mapid].push({
+                                    name:event.layer.name,
+                                    layer: event.layer,
+                                    visible:true
+                                });
+                            }
+                            //mapLayers[mapid] = ;
+
+                            //console.log(mapLayers);
+                            $rootScope.$broadcast("layerAdded",{mapid:mapid});
+
+                        });
+
+
+                    });
+                });
+            },
+
+            getLayers: function(mapid){
+                return mapLayers[mapid];
             }
         };
     }]);
