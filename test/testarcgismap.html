@@ -36,7 +36,7 @@
   </div>
 </div>
 <div style="float:left;margin:0 auto;width:1000px;height:600px;border:2px solid red;">
-    <arcgis-map layers="map.layers" mapid="myMapId" center="map.center" zoom="map.zoom" basemap="{{map.basemap}}">
+    <arcgis-map layers="map.layers" mapid="myMapId" center="map.center" zoom="map.zoom" basemap="{{map.basemap}}" options="{{map.options}}">
        <arcgis-fetaure-layer url="http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0">
 
         </arcgis-fetaure-layer>
@@ -61,8 +61,8 @@
 <script src="../src/services/mapRegistry.js"></script>
 <script src="../src/directives/arcgisFeatureLayer.js"></script>
 <script src="../src/directives/arcgisMap.js"></script>
-
-<script src="testController.js"></script>
 <script src="../src/directives/baseMap.js"></script>
+<script src="testController.js"></script>
+
 </body>
 </html>

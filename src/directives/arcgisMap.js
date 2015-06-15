@@ -54,62 +54,65 @@ angular.module("arcgis-map")
                 if($attrs.basemap){
                     mapOptions.basemap = $scope.basemap;
                 }
-
+                /**
+                 * Get options objects data
+                 */
                 if($attrs.options){
-                    /**
-                     * Get options objects data
-                     */
-                    var options = JSON.parse($attrs.options);
-                    /**
-                     * Define Arcgis map's valid attributes
-                     */
-                    var validOptions = JSON.parse(JSON.stringify({
-                        string:['navigationMode','sliderOrientation','sliderPosition'],
-                        bools:['autoResize', 'displayGraphicsOnPan', 'fadeOnZoom', 'fitExtent', 'force3DTransforms', 'logo', 'nav',
-                            'optimizePanAnimation', 'showAttribution', 'showInfoWindowOnClick','slider', 'smartNavigation', 'wrapAround180'],
-                        numeric:['attributionWidth', 'maxScale', 'maxZoom', 'minScale', 'minZoom', 'resizeDelay', 'scale']
-                    }));
-                    /**
-                     * Check key with valid options (via validOptions), if available, set value as option to map
-                     */
-                    angular.forEach(validOptions.bools, function (key) {
-                        if (typeof options[key] !== 'undefined') {
-                            //console.log(options[key].toString() === 'true')
-                            mapOptions[key] = options[key].toString() === 'true';
+                    $timeout(function () {
+                        var options = JSON.parse($attrs.options);
+
+                        /**
+                         * Define Arcgis map's valid attributes
+                         */
+                        var validOptions = JSON.parse(JSON.stringify({
+                            string:['navigationMode','sliderOrientation','sliderPosition'],
+                            bools:['autoResize', 'displayGraphicsOnPan', 'fadeOnZoom', 'fitExtent', 'force3DTransforms', 'logo', 'nav',
+                                'optimizePanAnimation', 'showAttribution', 'showInfoWindowOnClick','slider', 'smartNavigation', 'wrapAround180'],
+                            numeric:['attributionWidth', 'maxScale', 'maxZoom', 'minScale', 'minZoom', 'resizeDelay', 'scale']
+                        }));
+                        /**
+                         * Check key with valid options (via validOptions), if available, set value as option to map
+                         */
+                        angular.forEach(validOptions.bools, function (key) {
+                            if (typeof options[key] !== 'undefined') {
+                                //console.log(options[key].toString() === 'true')
+                                mapOptions[key] = options[key].toString() === 'true';
+                            }
+                        });
+                        angular.forEach(validOptions.numeric, function (key) {
+                            if (options[key]) {
+                                //console.log(options[key])
+                                mapOptions[key] = options[key];
+                            }
+                        });
+                        if (options.navigationMode && validOptions.string.indexOf('navigationMode') != -1) {
+                            //console.log(validOptions.string.indexOf('navigationMode'))
+                            if (options.navigationMode !== 'css-transforms' && options.navigationMode !== 'classic') {
+                                throw new Error('navigationMode must be \'css-transforms\' or \'classic\'.');
+                            } else {
+                                mapOptions.navigationMode = options.navigationMode;
+                            }
                         }
-                    });
-                    angular.forEach(validOptions.numeric, function (key) {
-                        if (options[key]) {
-                            //console.log(options[key])
-                            mapOptions[key] = options[key];
+                        if (options.sliderOrientation && validOptions.string.indexOf('sliderOrientation') != -1) {
+                            if (options.sliderOrientation !== 'horizontal' && options.sliderOrientation !== 'vertical') {
+                                throw new Error('sliderOrientation must be \'horizontal\' or \'vertical\'.');
+                            } else {
+                                mapOptions.sliderOrientation = options.sliderOrientation;
+                            }
                         }
-                    });
-                    if (options.navigationMode && validOptions.string.indexOf('navigationMode') != -1) {
-                        //console.log(validOptions.string.indexOf('navigationMode'))
-                        if (options.navigationMode !== 'css-transforms' && options.navigationMode !== 'classic') {
-                            throw new Error('navigationMode must be \'css-transforms\' or \'classic\'.');
-                        } else {
-                            mapOptions.navigationMode = options.navigationMode;
+                        if (options.sliderPosition && validOptions.string.indexOf('sliderPosition') != -1) {
+                            //console.log(validOptions.string.indexOf('sliderPosition'))
+                            var allowed = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
+                            if (allowed.indexOf(options.sliderPosition) < 0) {
+                                throw new Error('sliderPosition must be in ' + allowed);
+                            } else {
+                                mapOptions.sliderPosition = options.sliderPosition;
+                            }
                         }
-                    }
-                    if (options.sliderOrientation && validOptions.string.indexOf('sliderOrientation') != -1) {
-                        //console.log(validOptions.string.indexOf('sliderOrientation'))
-                        if (options.sliderOrientation !== 'horizontal' && options.sliderOrientation !== 'vertical') {
-                            throw new Error('sliderOrientation must be \'horizontal\' or \'vertical\'.');
-                        } else {
-                            mapOptions.sliderOrientation = options.sliderOrientation;
-                        }
-                    }
-                    if (options.sliderPosition && validOptions.string.indexOf('sliderPosition') != -1) {
-                        //console.log(validOptions.string.indexOf('sliderPosition'))
-                        var allowed = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
-                        if (allowed.indexOf(options.sliderPosition) < 0) {
-                            throw new Error('sliderPosition must be in ' + allowed);
-                        } else {
-                            mapOptions.sliderPosition = options.sliderPosition;
-                        }
-                    }
+                    },0);
                 }
+
+
                 /*Created esri map object using esri/map library*/
                 require(["esri/map"],function(Map){
 
