@@ -5,12 +5,12 @@
 
         <div class="input-field col s12">
             <i class="mdi-action-search prefix"></i>
-            <input id="icon_prefix" type="text" class="validate">
+            <input id="icon_prefix" type="text" class="validate" ng-model="searchFilterQuery">
             <label for="icon_prefix">Search Layer</label>
         </div>
 
 </div>
-<div class="row" ng-repeat="layer in layers">
+<div class="row" ng-repeat="layer in layers | filter:layerFilter">
     <layer-item layer="layer"></layer-item>
 </div>
 
