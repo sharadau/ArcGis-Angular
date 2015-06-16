@@ -3,25 +3,44 @@
  */
 
 angular.module("arcgis-map")
-    .directive("selectBaseMap", function(){
+    .directive("selectBasemapWidget", ['mapRegistry', function(mapRegistry){
         return{
-            restrict: "E",
-            scope: true,
-            require: ['^arcgisMap'],
-            template:'<select ng-model="map.basemap">'+
-                '<option value="gray">Gray</option>'+
-                '<option value="topo">Topographic</option>'+
-                '<option value="streets">Streets</option>'+
-                '<option value="satellite">Satellite</option>'+
-                '<option value="hybrid">Hybrid</option>'+
-                '<option value="oceans">Oceans</option>'+
-                '<option value="national-geographic">National Geographic</option>'+
-                '<option value="osm">Open Street Map</option>'+
-            '</select>',
-                //'<select ng-model="map.basemap" ng-options="key as value for  (key , value) in options track by key"></select>',
-            link: function(scope,element,attrs){
-                //console.log(scope.map.basemap);
-                //scope.options = ['gray','topo','stre/ets','satellite','hybrid','oceans','national-geographic','osm'];
+            restrict: 'E',
+            templateUrl:'../src/template/basemapView.html',
+            compile:function($element,$attrs){
+                if(!$attrs.mapid){
+                    throw new Error('Basemap Widget does not have mapid!');
+                }
+            },
+            controller: function($scope,$element,$attrs){
+                if($attrs.showCollapsible === 'true'){
+                    $scope.showCollapsible = false;
+                }else{
+                    $scope.showCollapsible = true;
+                }
+                $scope.options = [
+                    { id: 'gray',title:'Gray', url:'', thumb:'gray.jpg' },
+                    { id: 'topo',title:'Topographic', url:'', thumb:'topo.jpg' },
+                    { id: 'streets',title:'Streets', url:'', thumb:'streets.jpg' },
+                    { id: 'satellite',title:'Satellite', url:'', thumb:'satellite.jpg' },
+                    { id: 'hybrid',title:'Hybrid', url:'', thumb:'hybrid.jpg' },
+                    { id: 'oceans',title:'Oceans', url:'', thumb:'oceans.jpg' },
+                    { id: 'national-geographic',title:'National Geographic', url:'', thumb:'natgeo.jpg' },
+                    { id: 'osm',title:'Open Street Map', url:'', thumb:'osm.jpg' }];
+
+                $scope.chunk = function(arr, n) {
+                    return arr.slice(0,(arr.length+n-1)/n|0).
+                        map(function(c,i) { return arr.slice(n*i,n*i+n); });
+                }
+                /*Create 3-dimensional array of options*/
+                $scope.basemapList = $scope.chunk($scope.options,3);
+
+                $scope.getBaseMap = function(basemapId){
+                    mapRegistry.selectBaseMap($attrs.mapid, basemapId);
+                }
+            },
+            link: function(scope,element,attrs,controller){
+
             }
         }
-    })
+    }])
