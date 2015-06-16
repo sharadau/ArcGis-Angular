@@ -2,7 +2,7 @@
  * Created by synerzip on 15/06/15.
  */
 angular.module("arcgis-map")
-    .directive("layerWidget", ["$q", "mapRegistry", function ($q, mapRegistry) {
+    .directive("layerWidget", ["$q", "mapRegistry","$window", function ($q, mapRegistry,$window) {
         return {
             restrict: 'E',
             scope: {
@@ -13,7 +13,13 @@ angular.module("arcgis-map")
             //'<div style="border-bottom:1px solid blue;width:100%;height:30px;" ng-repeat="layer in layers"><layer-item layer="layer"></layer-item></div>' +
             //'</div>',
             templateUrl:"../src/template/layerWidget.html",
+            compile:function($element,$attrs){
+                //$element.parent().css( "height", ($window.innerHeight - 64)+"px" );
+                //$element.parent().css( "overflow", "auto" );
+
+            },
             controller: function ($scope) {
+                $scope.availableHeight = ($window.innerHeight - 200)+"px";
                 $scope.searchFilterQuery = null;
                 $scope.stoploading = false;
                 $scope.layers = mapRegistry.getLayers($scope.mapid);

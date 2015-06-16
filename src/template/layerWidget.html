@@ -1,19 +1,23 @@
 <div class="progress" ng-hide="stoploading">
     <div class="indeterminate"></div>
 </div>
+
 <div class="row">
 
-        <div class="input-field col s12">
-            <i class="mdi-action-search prefix"></i>
-            <input id="icon_prefix" type="text" class="validate" ng-model="searchFilterQuery">
-            <label for="icon_prefix">Search Layer</label>
-        </div>
+    <div class="input-field col s12">
+        <i class="mdi-action-search prefix"></i>
+        <input id="icon_prefix" type="text" class="validate" ng-model="searchFilterQuery">
+        <label for="icon_prefix">Search Layer</label>
+    </div>
 
 </div>
-<div class="row" ng-repeat="layer in layers | filter:layerFilter">
-    <layer-item layer="layer"></layer-item>
+
+<!-- It should not be part of directive, it should belongs to using tag (availableHeight, and overflow)-->
+<div style="height:{{availableHeight}};overflow:auto;">
+    <div class="row" ng-repeat="layer in layers | filter:layerFilter">
+        <layer-item layer="layer"></layer-item>
+    </div>
+
+
 </div>
-
-
-
 
