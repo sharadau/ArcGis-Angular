@@ -23,7 +23,7 @@ angular.module("arcgis-map")
                     }
                     $element.parent().css( "height", ($window.innerHeight - 64)+"px" );
 
-                    $element.append("<div style='width:100%;height:100%;' id="+$attrs.mapid+"></div>");
+                    $element.append("<div style='width:100%;height:100%;box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)' id="+$attrs.mapid+"></div>");
                 }
 
             },
