@@ -14,6 +14,7 @@ angular.module("arcgis-map")
             //'</div>',
             templateUrl:"../src/template/layerWidget.html",
             controller: function ($scope) {
+                $scope.searchFilterQuery = null;
                 $scope.stoploading = false;
                 $scope.layers = mapRegistry.getLayers($scope.mapid);
                 $scope.$watch("layers",function(newarray,oldarray){
@@ -39,6 +40,10 @@ angular.module("arcgis-map")
                         //$scope.stoploading = true;
                     //}
                 });
+
+                $scope.layerFilter = function (item) {
+                    return $scope.searchFilterQuery ? (item.name.toLowerCase().indexOf($scope.searchFilterQuery) >= 0) : true;
+                };
             }
 
         };
