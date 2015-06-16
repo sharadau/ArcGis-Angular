@@ -14,15 +14,29 @@ angular.module("arcgis-map")
             //'</div>',
             templateUrl:"../src/template/layerWidget.html",
             controller: function ($scope) {
-
+                $scope.stoploading = false;
+                $scope.layers = mapRegistry.getLayers($scope.mapid);
                 $scope.$watch("layers",function(newarray,oldarray){
                     $scope.layers = newarray;
+
                 });
 
 
-                $scope.$on("layerAdded",function(event){
+                $scope.$on("layerAdded",function(event,layer){
                     //if(event.mapid == $scope.mapid){
-                        $scope.layers = mapRegistry.getLayers($scope.mapid);
+                        //$scope.stoploading = false;
+                    $scope.stoploading = false;
+                    $scope.$apply(function(){
+                        if(!$scope.layers){
+                            $scope.layers = [layer];
+                        }else{
+                            $scope.layers.push(layer);
+                        }
+                        $scope.stoploading = true;
+                    });
+
+                        //$scope.layers = mapRegistry.getLayers($scope.mapid);
+                        //$scope.stoploading = true;
                     //}
                 });
             }

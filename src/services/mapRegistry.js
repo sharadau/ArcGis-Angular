@@ -77,7 +77,11 @@ angular.module("arcgis-map",[])
                             //mapLayers[mapid] = ;
 
                             //console.log(mapLayers);
-                            $rootScope.$broadcast("layerAdded",{mapid:mapid});
+                            $rootScope.$broadcast("layerAdded",{
+                                name:event.layer.name,
+                                layer: event.layer
+
+                            });
 
                         });
 
