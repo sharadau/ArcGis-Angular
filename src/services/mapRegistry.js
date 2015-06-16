@@ -93,7 +93,7 @@ angular.module("arcgis-map",[])
             selectBaseMap: function(mapid,basemapid){
                 var mappromise = this.get(mapid);
                 mappromise.then(function(map){
-                    //map.setbaSEmaP();
+                    map.setBasemap(map);
                 });
             }
         };
