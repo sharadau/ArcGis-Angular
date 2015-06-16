@@ -1,0 +1,15 @@
+<div class="row">
+    <a class="btn btn-flat focus" style="text-transform:capitalize" ng-click="showCollapsible = !showCollapsible;">
+        <img style="vertical-align: middle" src="../src/images/basemap-icon.png"> Basemap<i style="vertical-align: middle" ng-class="{'mdi-navigation-expand-more': showCollapsible, 'mdi-navigation-expand-less': !showCollapsible}"></i>
+    </a>
+    <div style="margin: 2px; border: 1px solid #ddd;" ng-if="showCollapsible">
+        <div class="input-field">
+            <i class="mdi-action-search prefix"></i><input type="text" id="icon_basemap" ng-model="searchText.id" ><label for="icon_basemap">Search Basemap</label>
+        </div>
+        <div class="row" ng-repeat="option in basemapList | filter:searchText">
+            <div class="col s12 m6 l4" ng-repeat="data in option"><a href="javascript:void(0)" ng-click="getBaseMap(data.id)">
+                <img height="64" width="64" ng-src="../src/images/{{data.thumb}}"><span style="font-size: x-small">{{data.title}}</span></a>
+            </div>
+        </div>
+    </div>
+</div>
