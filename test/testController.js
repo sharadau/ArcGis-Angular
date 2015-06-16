@@ -12,7 +12,7 @@ angular.module("arcgis-map")
         basemap: 'topo',
         layers:null,
         options: {
-            navigationMode: 'classic', //css-transforms
+                navigationMode: 'classic', //css-transforms
                 sliderOrientation: 'horizontal',
                 sliderPosition: 'top-right',
                 fadeOnZoom: false,

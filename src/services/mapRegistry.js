@@ -64,14 +64,14 @@ angular.module("arcgis-map",[])
                             if(!mapLayers[mapid]){
                                 mapLayers[mapid] = [{
                                     name:event.layer.name,
-                                    layer: event.layer,
-                                    visible:true
+                                    layer: event.layer
+
                                 }];
                             }else{
                                 mapLayers[mapid].push({
                                     name:event.layer.name,
-                                    layer: event.layer,
-                                    visible:true
+                                    layer: event.layer
+
                                 });
                             }
                             //mapLayers[mapid] = ;
