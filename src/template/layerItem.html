@@ -1,4 +1,9 @@
-<div class="input-field col s12">
-    <input type="checkbox" id="{{layer.name}}" checked="checked" ng-disabled="hidden" ng-model="selected" ng-click="setVisible(selected)"/>
+<div class="input-field col s8">
+    <input type="checkbox" id="{{layer.name}}" checked="checked" ng-disabled="hidden" ng-model="selected"
+           ng-click="setVisible(selected)"/>
     <label for="{{layer.name}}">{{layer.name}}</label>
+    <ul class="nav-wrapper right hide-on-med-and-down">
+        <li><a href="#" ><i class="mdi-action-search"></i></a></li>
+    </ul>
 </div>
+

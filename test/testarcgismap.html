@@ -5,6 +5,7 @@
     <title>ArcGIS Map</title>
     <link rel="stylesheet" href="http://js.arcgis.com/3.13/esri/css/esri.css">
     <link rel="stylesheet" href="../src/style/materialize/css/materialize.css">
+    <link rel="stylesheet" href="../src/style/arcgis-angular-material.css">
     <style>
        /* html{
             height: 100%;
@@ -14,9 +15,21 @@
             overflow: hidden;
         }*/
 
+
     </style>
 </head>
 <body ng-controller="MapController">
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a class="btn-floating btn-large red">
+        <i class="large mdi-editor-mode-edit"></i>
+    </a>
+    <ul>
+        <li><a class="btn-floating red"><i class="large mdi-editor-insert-chart"></i></a></li>
+        <li><a class="btn-floating yellow darken-1"><i class="large mdi-editor-format-quote"></i></a></li>
+        <li><a class="btn-floating green"><i class="large mdi-editor-publish"></i></a></li>
+        <li><a class="btn-floating blue"><i class="large mdi-editor-attach-file"></i></a></li>
+    </ul>
+</div>
 <div class="navbar-fixed ">
     <nav>
         <div class="nav-wrapper">
@@ -26,7 +39,6 @@
             </ul>
             <ul class="right hide-on-med-and-down">
                 <li><a href="#"><i class="mdi-action-search"></i></a></li>
-               <!--<li></li>-->
                 <li><a href="#"><i class="mdi-action-view-module"></i></a></li>
                 <li><a href="#"><i class="mdi-navigation-refresh"></i></a></li>
                 <li><a href="#"><i class="mdi-navigation-more-vert"></i></a></li>
@@ -48,13 +60,20 @@
 
         <layer-widget mapid="myMapId" id="layerWidget"></layer-widget>
         <arcgis-basemap-gallery mapid="myMapId" id="basemapwidget"></arcgis-basemap-gallery>
-        <arcgis-legend mapid="myMapId" id="legendId"></arcgis-legend>
+        <div class="row">
+
+            <div class="col s12" style="height:590px;overflow: auto;">
+                <arcgis-legend mapid="myMapId" id="legendId"></arcgis-legend>
+            </div>
+        </div>
+
 
     </div>
 
     <div class="col s12 m8 l9"> <!-- Note that "m8 l9" was added -->
         <arcgis-map layers="map.layers" mapid="myMapId" center="map.center" zoom="map.zoom" basemap="{{map.basemap}}"
                     options="{{map.options}}">
+
            <!-- <arcgis-fetaure-layer
                     url="http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0">
 
@@ -153,6 +172,7 @@
 <script src="../src/directives/layerItem.js"></script>
 <script src="../src/directives/arcgisLegends.js"></script>
 <script src="../src/directives/basemapGallery.js"></script>
+<script src="../src/directives/arcgisGeocoder.js"></script>
 
 
 <script src="../src/directives/baseMap.js"></script>
