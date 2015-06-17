@@ -6,23 +6,27 @@
     <link rel="stylesheet" href="http://js.arcgis.com/3.13/esri/css/esri.css">
     <link rel="stylesheet" href="../src/style/materialize/css/materialize.css">
     <style>
-        html{
+       /* html{
             height: 100%;
         }
         body {
             min-height: 100%;
             overflow: hidden;
-        }
+        }*/
 
     </style>
 </head>
 <body ng-controller="MapController">
-<div class="navbar-fixed">
+<div class="navbar-fixed ">
     <nav>
         <div class="nav-wrapper">
-            <a href="#" class="brand-logo">Logo</a>
+            <ul class="left">
+             <li><a href="#"><i class="large mdi-navigation-menu"></i></a></li>
+             <li><a href="#" class="brand-logo">Logo</a></li>
+            </ul>
             <ul class="right hide-on-med-and-down">
                 <li><a href="#"><i class="mdi-action-search"></i></a></li>
+               <!--<li></li>-->
                 <li><a href="#"><i class="mdi-action-view-module"></i></a></li>
                 <li><a href="#"><i class="mdi-navigation-refresh"></i></a></li>
                 <li><a href="#"><i class="mdi-navigation-more-vert"></i></a></li>
@@ -33,15 +37,26 @@
 <div class="row">
 
     <div class="col s12 m4 l3"> <!-- Note that "m4 l3" was added -->
-        <select-basemap-widget mapid="myMapId"></select-basemap-widget><!--trigger-field="true"-->
-        <layer-widget mapid="myMapId"></layer-widget>
+
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s3"><a href="#layerWidget">Layers</a></li>
+                <li class="tab col s3"><a href="#basemapwidget">Basemap</a></li>
+                <li class="tab col s3"><a href="#legendId">Legends</a></li>
+
+            </ul>
+        </div>
+
+        <layer-widget mapid="myMapId" id="layerWidget"></layer-widget>
+        <arcgis-basemap-gallery mapid="myMapId" id="basemapwidget"></arcgis-basemap-gallery>
+        <arcgis-legend mapid="myMapId" id="legendId"></arcgis-legend>
 
     </div>
 
     <div class="col s12 m8 l9"> <!-- Note that "m8 l9" was added -->
         <arcgis-map layers="map.layers" mapid="myMapId" center="map.center" zoom="map.zoom" basemap="{{map.basemap}}"
                     options="{{map.options}}">
-            <arcgis-fetaure-layer
+           <!-- <arcgis-fetaure-layer
                     url="http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0">
 
             </arcgis-fetaure-layer>
@@ -59,31 +74,29 @@
             <arcgis-fetaure-layer
                     url="http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Hydrography/Watershed173811/MapServer/0">
 
-            </arcgis-fetaure-layer>
-            <arcgis-fetaure-layer
-                    url="http://54.221.225.213/arcgis/rest/services/QuantumPlatform/Ambit_View/MapServer/0">
+            </arcgis-fetaure-layer>-->
 
-            </arcgis-fetaure-layer>
-            <arcgis-fetaure-layer
-                    url="http://54.221.225.213/arcgis/rest/services/QuantumPlatform/Voice/MapServer/0">
 
-            </arcgis-fetaure-layer>
-            <arcgis-fetaure-layer
-                    url="http://54.221.225.213/arcgis/rest/services/QuantumPlatform/Voice/MapServer/0">
+            <arcgis-dynamic-map-service-layer url="http://54.221.225.213/arcgis/rest/services/QuantumPlatform/Ambit_View/MapServer" name="Ambit_View">
 
-            </arcgis-fetaure-layer>
-            <arcgis-fetaure-layer
-                    url="http://54.221.225.213/arcgis/rest/services/QuantumPlatform/Voice/MapServer/1">
+            </arcgis-dynamic-map-service-layer>
 
-            </arcgis-fetaure-layer>
-            <arcgis-fetaure-layer
-                    url="http://54.221.225.213/arcgis/rest/services/QuantumPlatform/Facilities/FeatureServer/4">
+            <arcgis-dynamic-map-service-layer url="http://54.221.225.213/arcgis/rest/services/QuantumPlatform/Voice/MapServer" name="Voice">
 
-            </arcgis-fetaure-layer>
-            <arcgis-fetaure-layer
-                    url=" http://54.221.225.213/arcgis/rest/services/QuantumPlatform/Facilities/FeatureServer/5">
+            </arcgis-dynamic-map-service-layer>
 
-            </arcgis-fetaure-layer>
+            <arcgis-dynamic-map-service-layer url="http://54.221.225.213/arcgis/rest/services/QuantumPlatform/Voice/MapServer/0" name="Vector tiles">
+
+            </arcgis-dynamic-map-service-layer>
+
+
+
+           <!-- <arcgis-dynamic-map-service-layer url="http://54.221.225.213/arcgis/rest/services/QuantumPlatform/Facilities/FeatureServer" name="Facilities">
+
+            </arcgis-dynamic-map-service-layer>-->
+
+
+
 
 
 
@@ -135,9 +148,12 @@
 <script src="../bower_components/angular/angular.js"></script>
 <script src="../src/services/mapRegistry.js"></script>
 <script src="../src/directives/arcgisFeatureLayer.js"></script>
+<script src="../src/directives/arcgisDynamicMapServiceLayer.js"></script>
 <script src="../src/directives/arcgisMap.js"></script>
 <script src="../src/directives/layerWidget.js"></script>
 <script src="../src/directives/layerItem.js"></script>
+<script src="../src/directives/arcgisLegends.js"></script>
+<script src="../src/directives/basemapGallery.js"></script>
 
 <!--<script src="../src/directives/basemapGallery.js"></script>-->
 

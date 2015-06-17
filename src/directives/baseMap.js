@@ -11,9 +11,10 @@ angular.module("arcgis-map")
                 if(!$attrs.mapid){
                     throw new Error('Basemap Widget does not have mapid!');
                 }
+
             },
             controller: function($scope,$element,$attrs){
-                if($attrs.triggerField === 'true'){
+                if($attrs.triggerField){
                     $scope.showButton = false;
                 }else{
                     $scope.showButton = true;
@@ -24,18 +25,11 @@ angular.module("arcgis-map")
                         $scope.basemapOptions = JSON.parse($attrs.basemapOptions);
                     },0)
                 }else{
-                    $scope.basemapOptions = [
-                        { id: 'osm',title:'Open Street Map', url:'', thumb:'osm.jpg' },
-                        { id: 'gray',title:'Gray', url:'', thumb:'gray.jpg' },
-                        { id: 'topo',title:'Topographic', url:'', thumb:'topo.jpg' },
-                        { id: 'streets',title:'Streets', url:'', thumb:'streets.jpg' },
-                        { id: 'hybrid',title:'Hybrid', url:'', thumb:'hybrid.jpg' },
-                        { id: 'oceans',title:'Oceans', url:'', thumb:'oceans.jpg' },
-                        { id: 'national-geographic',title:'National Geographic', url:'', thumb:'national-geographic.jpg' },
-                        { id: 'satellite',title:'Satellite', url:'', thumb:'satellite.jpg' }];
 
-                };
-                $scope.searchBasemap = function(str){
+
+                    console.log($scope.basemapOptions);
+                }
+                /*$scope.searchBasemap = function(str){
                     $scope.searched = [];
                     $scope.basemapOptions.forEach(function(obj){
                         var data =  obj['id'];
@@ -47,7 +41,7 @@ angular.module("arcgis-map")
                 }
                 if($scope.searched){
                     $scope.basemapOptions = $scope.searched;
-                }
+                }*/
                 $scope.chunk = function(arr, n) {
                     return arr.slice(0,(arr.length+n-1)/n|0).
                         map(function(c,i) { return arr.slice(n*i,n*i+n); });

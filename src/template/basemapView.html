@@ -20,11 +20,11 @@
     </ul>
 </div>
 <div ng-if="!showButton">
-    <a class="dropdown-button" href="#!" data-activates="dropdown1" style="text-transform:capitalize" ng-click="showCollapsible = !showCollapsible;">
+    <a style="text-transform:capitalize" ng-click="showCollapsible = !showCollapsible;">
         <img style="vertical-align: middle;border:1px solid #fff; box-shadow: 0px 0px 7px #000; height:16px; width:16px" ng-src="../src/images/{{map.basemap}}.jpg">
         {{map.basemap}}<i class="mdi-navigation-arrow-drop-down right"></i></a>
 
-    <ul id="dropdown1" class="dropdown-content" style="margin-top: 15px;">
+    <ul  style="margin-top: 15px;">
         <li ng-repeat="data in basemapOptions | filter:searchText">
             <div class="card">
                 <div class="card-image" style="margin: 0px; padding: 0px;">

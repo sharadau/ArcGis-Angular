@@ -1,6 +1,3 @@
-<div class="progress" ng-hide="stoploading">
-    <div class="indeterminate"></div>
-</div>
 
 <div class="row">
 
@@ -17,7 +14,9 @@
     <div class="row" ng-repeat="layer in layers | filter:layerFilter">
         <layer-item layer="layer"></layer-item>
     </div>
-
+    <div class="progress" ng-hide="stoploading">
+        <div class="indeterminate"></div>
+    </div>
 
 </div>
 
