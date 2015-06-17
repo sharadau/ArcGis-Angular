@@ -11,9 +11,9 @@
 
 <!-- It should not be part of directive, it should belongs to using tag (availableHeight, and overflow)-->
 <div style="height:{{availableHeight}};overflow:auto;">
-    <div class="row" ng-repeat="layer in layers | filter:layerFilter">
-        <layer-item layer="layer"></layer-item>
-    </div>
+
+        <layer-item layer="layer" ng-repeat="layer in layers | filter:layerFilter"></layer-item>
+
     <div class="progress" ng-hide="stoploading">
         <div class="indeterminate"></div>
     </div>

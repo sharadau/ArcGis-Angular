@@ -1,9 +1,68 @@
-<div class="input-field col s8">
-    <input type="checkbox" id="{{layer.name}}" checked="checked" ng-disabled="hidden" ng-model="selected"
-           ng-click="setVisible(selected)"/>
-    <label for="{{layer.name}}">{{layer.name}}</label>
-    <ul class="nav-wrapper right hide-on-med-and-down">
-        <li><a href="#" ><i class="mdi-action-search"></i></a></li>
-    </ul>
-</div>
+<!--<ul class="collection with-header">
 
+    <li class="collection-header">
+        <div>
+            <input type="checkbox" id="{{layer.name}}" checked="checked" ng-disabled="hidden" ng-model="selected"
+                   ng-click="setVisible(selected)"/>
+            <label for="{{layer.name}}">{{layer.name}}</label>
+            <a href="#!" ng-click="setExtent()" class="secondary-content">
+                <i class="mdi-action-aspect-ratio"></i>
+            </a>
+
+        </div>
+    </li>
+    <li class="collection-item" ng-repeat="layerInfo in layerInfos()">
+        <div>-->
+<!--<input type="checkbox" id="{{layerInfo.name}}" checked="checked" ng-disabled="hidden" ng-model="selected"
+       ng-click="setVisible(selected)"/>-->
+<!-- <label for="{{layer.name}}">{{layerInfo.name}}</label>
+ <a href="#!" ng-click="setExtent()" class="secondary-content">
+     <i class="mdi-action-aspect-ratio"></i>
+ </a>
+
+</div>
+</li>
+
+
+</ul>-->
+
+
+<div class="esriLegendService">
+    <table width="95%">
+        <tbody>
+        <tr>
+            <td align="left"><input type="checkbox" id="{{layer.name}}" checked="checked" ng-disabled="hidden"
+                                    ng-model="selected"
+                                    ng-click="setVisible(selected)"/>
+                <label for="{{layer.name}}">{{layer.name}}</label></td>
+            <td align="right">
+                <a href="#!" ng-click="setExtent()" class="secondary-content">
+                    <i class="small mdi-image-remove-red-eye"></i>
+                </a>
+                <a href="#!" ng-click="setContentToggle()" class="secondary-content">
+                    <i ng-class="hide_content ? 'small mdi-content-add':'small mdi-content-remove'"></i>
+                </a>
+
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div ng-hide="hide_content">
+        <div class="" ng-repeat="layerInfo in layerInfos()">
+            <table width="95%" class="esriLegendLayerLabel">
+                <tbody>
+                <tr>
+                    <td align="left">
+                        <input type="checkbox" id="{{layerInfo.name}}" checked="checked" ng-disabled="hidden"
+                               ng-model="selected"
+                               ng-click="setVisible(selected,layerInfo.id)"/>
+                        <label for="{{layerInfo.name}}">{{layerInfo.name}}</label></td>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

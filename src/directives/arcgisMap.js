@@ -16,19 +16,23 @@ angular.module("arcgis-map")
                 layers:'='
 
             },
+            transclude:true,
             compile:function($element,$attrs){
                 if($attrs.mapid){
-                    if($document[0].getElementById($attrs.mapid)){
-                        throw new Error('ID already exists!')
-                    }
+                    //if($document[0].getElementById($attrs.mapid)){
+                      //  throw new Error('ID already exists!')
+                    //}
                     $element.parent().css( "height", ($window.innerHeight - 64)+"px" );
 
-                    $element.append("<div style='width:100%;height:100%;' id="+$attrs.mapid+"></div>");
+                    //$element.append("<div style='position:relative;width:100%;height:100%;' id="+$attrs.mapid+" ng-transclude></div>");
                 }
 
             },
-            controller:function($scope,$element,$attrs){
 
+            templateUrl:"../src/template/arcgisMap.html",
+            controller:function($scope,$element,$attrs){
+                $scope.mapid = $attrs.mapid;
+                $scope.mapheight = $window.innerHeight - 64;
                 /**
                  * Deferred will be resolved when the map created
                  */
@@ -125,6 +129,10 @@ angular.module("arcgis-map")
 
 
                 mapDeferred.promise.then(function(map){
+
+                    $scope.$on("resizemap",function(){
+                        map.resize();
+                    });
 
                     //Set watch for basemap
                     $scope.$watch('basemap', function(newBasemap, oldBasemap) {
