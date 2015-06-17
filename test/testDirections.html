@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html ng-app="arcgis-map">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>ArcGIS Map</title>
+    <link rel="stylesheet" href="http://js.arcgis.com/3.13/esri/css/esri.css">
+    <link rel="stylesheet" href="../src/style/materialize/css/materialize.css">
+    <style>
+        /* html{
+             height: 100%;
+         }
+         body {
+             min-height: 100%;
+             overflow: hidden;
+         }*/
+
+    </style>
+</head>
+<body ng-controller="MapController">
+<div class="navbar-fixed ">
+    <nav>
+        <div class="nav-wrapper">
+            <ul class="left">
+                <li><a href="#"><i class="large mdi-navigation-menu"></i></a></li>
+                <li><a href="#" class="brand-logo">Logo</a></li>
+            </ul>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="#"><i class="mdi-action-search"></i></a></li>
+                <!--<li></li>-->
+                <li><a href="#"><i class="mdi-action-view-module"></i></a></li>
+                <li><a href="#"><i class="mdi-navigation-refresh"></i></a></li>
+                <li><a href="#"><i class="mdi-navigation-more-vert"></i></a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div class="row">
+
+    <div class="col s12 m4 l3"> <!-- Note that "m4 l3" was added -->
+
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s3"><a href="#directionswidget">Directions</a></li>
+            </ul>
+        </div>
+
+        <arcgis-directions mapid="myMapId" id="directionswidget"></arcgis-directions>
+    </div>
+
+    <div class="col s12 m8 l9"> <!-- Note that "m8 l9" was added -->
+        <arcgis-map layers="map.layers" mapid="myMapId" center="map.center" zoom="map.zoom" basemap="{{map.basemap}}"
+                    options="{{map.options}}">
+
+            <arcgis-dynamic-map-service-layer url="http://54.221.225.213/arcgis/rest/services/QuantumPlatform/Ambit_View/MapServer" name="Ambit_View">
+
+            </arcgis-dynamic-map-service-layer>
+
+            <arcgis-dynamic-map-service-layer url="http://54.221.225.213/arcgis/rest/services/QuantumPlatform/Voice/MapServer" name="Voice">
+
+            </arcgis-dynamic-map-service-layer>
+
+            <arcgis-dynamic-map-service-layer url="http://54.221.225.213/arcgis/rest/services/QuantumPlatform/Voice/MapServer/0" name="Vector tiles">
+
+            </arcgis-dynamic-map-service-layer>
+
+        </arcgis-map>
+
+    </div>
+
+</div>
+
+<script type="text/javascript" src="../bower_components/jquery/jquery-2.1.1.min.js"></script>
+<script src="../src/style/materialize/js/materialize.js"></script>
+<script src="http://js.arcgis.com/3.13/"></script>
+<script src="../bower_components/requirejs/require.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../src/services/mapRegistry.js"></script>
+<script src="../src/directives/arcgisFeatureLayer.js"></script>
+<script src="../src/directives/arcgisDynamicMapServiceLayer.js"></script>
+<script src="../src/directives/arcgisMap.js"></script>
+<script src="../src/directives/layerWidget.js"></script>
+<script src="../src/directives/layerItem.js"></script>
+
+<script src="../src/directives/directionsWidget.js"></script>
+
+<script src="testController.js"></script>
+
+</body>
+</html>
