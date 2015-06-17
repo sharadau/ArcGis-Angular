@@ -3,7 +3,7 @@
  */
 
 angular.module("arcgis-map")
-    .directive("selectBasemapWidget", ['mapRegistry', function(mapRegistry){
+    .directive("selectBasemapWidget", ['mapRegistry','$timeout', function(mapRegistry,$timeout){
         return{
             restrict: 'E',
             templateUrl:'../src/template/basemapView.html',
@@ -13,31 +13,53 @@ angular.module("arcgis-map")
                 }
             },
             controller: function($scope,$element,$attrs){
-                if($attrs.showCollapsible === 'true'){
-                    $scope.showCollapsible = false;
+                if($attrs.triggerField === 'true'){
+                    $scope.showButton = false;
                 }else{
-                    $scope.showCollapsible = true;
+                    $scope.showButton = true;
                 }
-                $scope.options = [
-                    { id: 'gray',title:'Gray', url:'', thumb:'gray.jpg' },
-                    { id: 'topo',title:'Topographic', url:'', thumb:'topo.jpg' },
-                    { id: 'streets',title:'Streets', url:'', thumb:'streets.jpg' },
-                    { id: 'satellite',title:'Satellite', url:'', thumb:'satellite.jpg' },
-                    { id: 'hybrid',title:'Hybrid', url:'', thumb:'hybrid.jpg' },
-                    { id: 'oceans',title:'Oceans', url:'', thumb:'oceans.jpg' },
-                    { id: 'national-geographic',title:'National Geographic', url:'', thumb:'natgeo.jpg' },
-                    { id: 'osm',title:'Open Street Map', url:'', thumb:'osm.jpg' }];
 
+                if($attrs.basemapOptions){
+                    $timeout(function () {
+                        $scope.basemapOptions = JSON.parse($attrs.basemapOptions);
+                    },0)
+                }else{
+                    $scope.basemapOptions = [
+                        { id: 'osm',title:'Open Street Map', url:'', thumb:'osm.jpg' },
+                        { id: 'gray',title:'Gray', url:'', thumb:'gray.jpg' },
+                        { id: 'topo',title:'Topographic', url:'', thumb:'topo.jpg' },
+                        { id: 'streets',title:'Streets', url:'', thumb:'streets.jpg' },
+                        { id: 'hybrid',title:'Hybrid', url:'', thumb:'hybrid.jpg' },
+                        { id: 'oceans',title:'Oceans', url:'', thumb:'oceans.jpg' },
+                        { id: 'national-geographic',title:'National Geographic', url:'', thumb:'national-geographic.jpg' },
+                        { id: 'satellite',title:'Satellite', url:'', thumb:'satellite.jpg' }];
+
+                };
+                $scope.searchBasemap = function(str){
+                    $scope.searched = [];
+                    $scope.basemapOptions.forEach(function(obj){
+                        var data =  obj['id'];
+                        if (data.indexOf(str) != -1) {
+                            $scope.searched.push(obj);
+
+                        }
+                    })
+                }
+                if($scope.searched){
+                    $scope.basemapOptions = $scope.searched;
+                }
                 $scope.chunk = function(arr, n) {
                     return arr.slice(0,(arr.length+n-1)/n|0).
                         map(function(c,i) { return arr.slice(n*i,n*i+n); });
                 }
                 /*Create 3-dimensional array of options*/
-                $scope.basemapList = $scope.chunk($scope.options,3);
+                $scope.basemapList = $scope.chunk($scope.basemapOptions,3);
 
                 $scope.getBaseMap = function(basemapId){
                     mapRegistry.selectBaseMap($attrs.mapid, basemapId);
+                    $scope.map.basemap = basemapId;
                 }
+
             },
             link: function(scope,element,attrs,controller){
 
