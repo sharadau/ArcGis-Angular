@@ -90,6 +90,43 @@ angular.module("arcgis-map",[])
                 });
             },
 
+            addMapServiceLayer: function(mapid,layerURL,layerName){
+                var mappromise = this.get(mapid);
+                mappromise.then(function(map){
+                    require([
+                        'esri/layers/ArcGISDynamicMapServiceLayer'], function (ArcGISDynamicMapServiceLayer) {
+                        var layer = new ArcGISDynamicMapServiceLayer(layerURL);
+                        map.addLayer(layer);
+                        layer.on("load",function(event){
+                            if(!mapLayers[mapid]){
+                                mapLayers[mapid] = [{
+                                    name:layerName,
+                                    layer: event.layer
+
+                                }];
+                            }else{
+                                mapLayers[mapid].push({
+                                    name:layerName,
+                                    layer: event.layer
+
+                                });
+                            }
+                            //mapLayers[mapid] = ;
+
+                            //console.log(mapLayers);
+                            $rootScope.$broadcast("layerAdded",{
+                                name:layerName,
+                                layer: event.layer
+
+                            });
+
+                        });
+
+
+                    });
+                });
+            },
+
             getLayers: function(mapid){
                 return mapLayers[mapid];
             },

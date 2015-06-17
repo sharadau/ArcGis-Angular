@@ -17,6 +17,7 @@ angular.module("arcgis-map")
                 //$element.parent().css( "height", ($window.innerHeight - 64)+"px" );
                 //$element.parent().css( "overflow", "auto" );
 
+
             },
             controller: function ($scope) {
                 $scope.availableHeight = ($window.innerHeight - 200)+"px";
@@ -48,7 +49,7 @@ angular.module("arcgis-map")
                 });
 
                 $scope.layerFilter = function (item) {
-                    return $scope.searchFilterQuery ? (item.name.toLowerCase().indexOf($scope.searchFilterQuery) >= 0) : true;
+                    return $scope.searchFilterQuery ? (item.name.toLowerCase().indexOf($scope.searchFilterQuery.toLowerCase()) >= 0) : true;
                 };
             }
 
