@@ -16,23 +16,19 @@ angular.module("arcgis-map")
                 layers:'='
 
             },
-            transclude:true,
             compile:function($element,$attrs){
                 if($attrs.mapid){
-                    //if($document[0].getElementById($attrs.mapid)){
-                      //  throw new Error('ID already exists!')
-                    //}
+                    if($document[0].getElementById($attrs.mapid)){
+                        throw new Error('ID already exists!')
+                    }
                     $element.parent().css( "height", ($window.innerHeight - 64)+"px" );
 
-                    //$element.append("<div style='position:relative;width:100%;height:100%;' id="+$attrs.mapid+" ng-transclude></div>");
+                    $element.append("<div style='width:100%;height:100%;' id="+$attrs.mapid+"></div>");
                 }
 
             },
-
-            templateUrl:"../src/template/arcgisMap.html",
             controller:function($scope,$element,$attrs){
-                $scope.mapid = $attrs.mapid;
-                $scope.mapheight = $window.innerHeight - 64;
+
                 /**
                  * Deferred will be resolved when the map created
                  */
@@ -130,10 +126,6 @@ angular.module("arcgis-map")
 
                 mapDeferred.promise.then(function(map){
 
-                    $scope.$on("resizemap",function(){
-                        map.resize();
-                    });
-
                     //Set watch for basemap
                     $scope.$watch('basemap', function(newBasemap, oldBasemap) {
                         if (newBasemap !== oldBasemap) {
@@ -150,18 +142,18 @@ angular.module("arcgis-map")
                     /**
                      * Set watch for zoom
                      */
-                    $scope.$watch('zoom', function(newZoom, oldZoom) {
+                    /*$scope.$watch('zoom', function(newZoom, oldZoom) {
                         if (newZoom !== oldZoom) {
                             /* If zoom value is changed, update zoom   */
-                            map.setZoom(newZoom);
-                        }
-                    });
+                            //map.setZoom(newZoom);
+                       /* }
+                    });*/
                     /**
                      * Set watch for center
                      */
                     $scope.$watch(
                         function($scope){
-                            return [$scope.center.lng,$scope.center.lat].join(',');
+                            return [$scope.center.lng,$scope.center.lat,$scope.zoom].join(',');
                         },
                         function(newCenter,oldCenter){
                             if($scope.inputChangeFlag){
@@ -170,9 +162,9 @@ angular.module("arcgis-map")
                             $scope.inputChangeFlag = true;
                             newCenter = newCenter.split(',');
 
-                            if( newCenter[0] !== '' && newCenter[1] !== '' )
+                            if( newCenter[0] !== '' && newCenter[1] !== '' && newCenter[2] !== '' )
                             {
-                                map.centerAndZoom([parseFloat(newCenter[0]), parseFloat(newCenter[1])],$scope.zoom);
+                                map.centerAndZoom([parseFloat(newCenter[0]), parseFloat(newCenter[1])],newCenter[2]);
                                 //map.centerAt([parseFloat(newCenter[0]), parseFloat(newCenter[1])], map.spatialReference);
                                 $scope.inputChangeFlag = false;
                             }
