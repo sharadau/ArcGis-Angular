@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html ng-app="arcgis-map">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>ArcGIS Map</title>
+    <link rel="stylesheet" href="http://js.arcgis.com/3.13/esri/css/esri.css">
+    <link rel="stylesheet" href="../src/style/materialize/css/materialize.css">
+    <style>
+        /* html{
+             height: 100%;
+         }
+         body {
+             min-height: 100%;
+             overflow: hidden;
+         }*/
+
+    </style>
+</head>
+<body ng-controller="MapController">
+<div class="navbar-fixed ">
+    <nav>
+        <div class="nav-wrapper">
+            <ul class="left">
+                <li><a href="#"><i class="large mdi-navigation-menu"></i></a></li>
+                <li><a href="#" class="brand-logo">Logo</a></li>
+            </ul>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="#"><i class="mdi-action-search"></i></a></li>
+                <!--<li></li>-->
+                <li><a href="#"><i class="mdi-action-view-module"></i></a></li>
+                <li><a href="#"><i class="mdi-navigation-refresh"></i></a></li>
+                <li><a href="#"><i class="mdi-navigation-more-vert"></i></a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div class="row">
+
+    <arcgis-search mapid="myMapId" id="searchWidget"></arcgis-search>
+    <div class="col s12 m8 l9"> <!-- Note that "m8 l9" was added -->
+        <arcgis-map layers="map.layers" mapid="myMapId" center="map.center" zoom="map.zoom" basemap="{{map.basemap}}"
+                    options="{{map.options}}">
+            <!-- <arcgis-fetaure-layer
+                     url="http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0">
+
+             </arcgis-fetaure-layer>
+
+             <arcgis-fetaure-layer
+                     url="http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Portland_Parks/FeatureServer/0">
+
+             </arcgis-fetaure-layer>
+
+             <arcgis-fetaure-layer
+                     url="http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Hydrography/Watershed173811/MapServer/1">
+
+             </arcgis-fetaure-layer>
+
+             <arcgis-fetaure-layer
+                     url="http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Hydrography/Watershed173811/MapServer/0">
+
+             </arcgis-fetaure-layer>-->
+
+
+            <!-- <arcgis-dynamic-map-service-layer url="http://54.221.225.213/arcgis/rest/services/QuantumPlatform/Ambit_View/MapServer" name="Ambit_View">
+
+             </arcgis-dynamic-map-service-layer>
+
+             <arcgis-dynamic-map-service-layer url="http://54.221.225.213/arcgis/rest/services/QuantumPlatform/Voice/MapServer" name="Voice">
+
+             </arcgis-dynamic-map-service-layer>
+
+             <arcgis-dynamic-map-service-layer url="http://54.221.225.213/arcgis/rest/services/QuantumPlatform/Voice/MapServer/0" name="Vector tiles">
+
+             </arcgis-dynamic-map-service-layer>-->
+
+
+
+            <!-- <arcgis-dynamic-map-service-layer url="http://54.221.225.213/arcgis/rest/services/QuantumPlatform/Facilities/FeatureServer" name="Facilities">
+
+             </arcgis-dynamic-map-service-layer>-->
+
+
+
+
+
+
+
+
+
+        </arcgis-map>
+
+    </div>
+
+</div>
+
+
+<!--<p>Basemap:
+    <select ng-model="map.basemap">
+        <option value="hybrid">Hybrid</option>
+        <option value="gray">Gray</option>
+        <option value="topo">Topographic</option>
+        <option value="streets">Streets</option>
+        <option value="satellite">Satellite</option>
+
+        <option value="oceans">Oceans</option>
+        <option value="national-geographic">National Geographic</option>
+        <option value="osm">Open Street Map</option>
+    </select>
+    Lat: <input type="number" step="any" ng-model="map.center.lat"/>
+    Lng: <input type="number" step="any" ng-model="map.center.lng"/>,
+    Zoom:
+    <select ng-model="map.zoom" ng-options="n for n in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]"></select>
+</p>
+
+<div style="border:1px solid green;margin-left:0;height:600px;width:200px;float:right;">
+
+
+
+
+</div>
+
+
+
+<div style="float:left;margin:0 auto;width:1000px;height:600px;border:2px solid red;">
+
+</div>-->
+
+<script type="text/javascript" src="../bower_components/jquery/jquery-2.1.1.min.js"></script>
+<script src="../src/style/materialize/js/materialize.js"></script>
+<script src="http://js.arcgis.com/3.13/"></script>
+<script src="../bower_components/requirejs/require.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../src/services/mapRegistry.js"></script>
+<script src="../src/directives/arcgisFeatureLayer.js"></script>
+<script src="../src/directives/arcgisDynamicMapServiceLayer.js"></script>
+<script src="../src/directives/arcgisMap.js"></script>
+<script src="../src/directives/layerWidget.js"></script>
+<script src="../src/directives/layerItem.js"></script>
+<script src="../src/directives/arcgisLegends.js"></script>
+<script src="../src/directives/basemapGallery.js"></script>
+
+
+<script src="../src/directives/baseMap.js"></script>
+<script src="../src/directives/SearchWidget.js"></script>
+
+<script src="testController.js"></script>
+
+</body>
+</html>
