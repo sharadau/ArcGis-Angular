@@ -1,18 +1,35 @@
-<div class="row">
-    <div id="info">
-        <legend>Select a shape then draw on map to add graphic</legend>
-        <ul>
-            <li><button id="Point">Point</button></li>
-            <li><button id="Multipoint">Multipoint</button></li>
-            <li><button id="Line">Line</button></li>
-            <li><button id="Polyline">Polyline</button></li>
-            <li><button id="FreehandPolyline">Freehand Polyline</button></li>
-            <li><button id="Triangle">Triangle</button></li>
-            <li><button id="Extent">Rectangle</button></li>
-            <li><button id="Circle">Circle</button></li>
-            <li><button id="Ellipse">Ellipse</button></li>
-            <li><button id="Polygon">Polygon</button></li>
-            <li><button id="FreehandPolygon">Freehand Polygon</button></li>
-        </ul>
+<div class="input-fields">
+    <div id="info" ng-click="drawGraphics($event)">
+        <label>Select a shape then draw on map to add graphic</label>
+        <div class="row">
+            <div class="col s12 m6 l6"><a id="Point" class="waves-effect waves-light btn-small"><i class="mdi-image-control-point left"></i>Point</a></div>
+            <div class="col s12 m6 l6"><a id="Multipoint" class="waves-effect waves-light btn-small"><i class="mdi-image-grain left"></i>Multipoint</a></div>
+        </div>
+        <div class="row">
+            <div class="col s12 m6 l6"><a id="Line" class="waves-effect waves-light btn-small"><i class="mdi-action-trending-up left"></i>Line</a></div>
+            <div class="col s12 m6 l6"><a id="Polyline" class="waves-effect waves-light btn-small"><i class="mdi-action-polymer left"></i>Polyline</a></div>
+        </div>
+        <div class="row">
+            <div class="col s12 m6 l6"><a id="Triangle" class="waves-effect waves-light btn-small"><i class="mdi-alert-warning left"></i>Triangle</a></div>
+            <div class="col s12 m6 l6"><a id="Circle" class="waves-effect waves-light btn-small"><i class="mdi-toggle-radio-button-off left"></i>Circle</a></div>
+        </div>
+        <div class="row">
+            <div class="col s12 m6 l6"><a id="Ellipse" class="waves-effect waves-light btn-small"><i class="mdi-editor-insert-link left"></i>Ellipse</a></div>
+            <div class="col s12 m6 l6"><a id="Polygon" class="waves-effect waves-light btn-small"><i class="mdi-action-label-outline left"></i>Polygon</a></div>
+        </div>
+        <div class="row">
+            <div class="col s12 m12 l12"><a id="FreehandPolygon" class="waves-effect waves-light btn-small"><i class="mdi-action-label left"></i>Freehand Polygon</a></div>
+        </div>
     </div>
 </div>
+<style rel="stylesheet" type="text/css">
+    #info {
+        margin-top: 60px;
+        color: #444;
+        height: auto;
+        font-family: arial;
+        padding: 10px;
+        position: absolute;
+        z-index: 40;
+    }
+</style>

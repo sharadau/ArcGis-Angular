@@ -8,25 +8,35 @@ angular.module("arcgis-map")
             restrict:'E',
             scope:{
                 mapid:"@"
-
             },
             // define an interface for working with this directive
             controller: function ($scope, $element, $attrs) {
                 var mappromise = mapRegistry.get($scope.mapid);
-                mappromise.then(function(map){
+                mappromise.then(function(map) {
                     require([
-                        'esri/dijit/Directions'], function (Directions) {
-                        var directions = new Directions({
-                            map: map
-                        },"directionId");
+                        "esri/dijit/Directions"
+                    ], function (Directions) {
+                        //all requests could/should be routed through a proxy to avoid making people sign in...
 
-                        directions.startup();
-                    })
+                        var geocoderOptions = {
+                            autoComplete: true,
+                            arcgisGeocoder: {
+                                url: "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer",
+                                name: "Esri World Geocoder",
+                                sourceCountry: "USA"
+                            }
+                        };
+                        var directions = new Directions({
+                             map: map,
+                             routeTaskUrl: "http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Network/USA/NAServer/Route",
+                             showClearButton: true,
+                             geocoderOptions: geocoderOptions
+                         },"directionId");
+                         directions.startup();
+                     })
                 });
             },
             templateUrl:"../src/template/directionsWidget.html"
 
         };
-    }]);/**
- * Created by synerzip on 17/06/15.
- */
+    }]);
