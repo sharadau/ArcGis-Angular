@@ -99,6 +99,4 @@ angular.module("arcgis-map")
             templateUrl:"../src/template/drawGraphicsWidget.html"
 
         };
-    }]);/**
- * Created by synerzip on 17/06/15.
- */
+    }]);

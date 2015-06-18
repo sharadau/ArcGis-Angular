@@ -19,15 +19,6 @@ angular.module("arcgis-map")
                 resizeDelay: 500
             }
         };
-        $scope.basemapOptions = [
-            {id: 'national-geographic', title: 'National Geographic', url: '', thumb: 'national-geographic.jpg'},
-            {id: 'gray', title: 'Gray', url: '', thumb: 'gray.jpg'},
-            {id: 'topo', title: 'Topographic', url: '', thumb: 'topo.jpg'},
-            {id: 'streets', title: 'Streets', url: '', thumb: 'streets.jpg'},
-            {id: 'satellite', title: 'Satellite', url: '', thumb: 'satellite.jpg'},
-            {id: 'hybrid', title: 'Hybrid', url: '', thumb: 'hybrid.jpg'},
-            {id: 'oceans', title: 'Oceans', url: '', thumb: 'oceans.jpg'},
-            {id: 'osm', title: 'Open Street Map', url: '', thumb: 'osm.jpg'}];
 
         $scope.setHideLeft = function(){
             $scope.hideleft = !$scope.hideleft;

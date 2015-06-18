@@ -14,17 +14,10 @@ angular.module("arcgis-map")
                 var mappromise = mapRegistry.get($scope.mapid);
                 mappromise.then(function(map) {
                     require([
-                        "esri/urlUtils", "esri/dijit/Directions"
-                    ], function (urlUtils, Directions) {
+                        "esri/dijit/Directions"
+                    ], function (Directions) {
                         //all requests could/should be routed through a proxy to avoid making people sign in...
-                    urlUtils.addProxyRule({
-                         urlPrefix: "route.arcgis.com",
-                         proxyUrl: "/sproxy/proxy.ashx"
-                    });
-                    urlUtils.addProxyRule({
-                         urlPrefix: "traffic.arcgis.com",
-                         proxyUrl: "/sproxy/proxy.ashx"
-                    });
+
                         var geocoderOptions = {
                             autoComplete: true,
                             arcgisGeocoder: {
