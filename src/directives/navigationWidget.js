@@ -84,38 +84,7 @@ angular.module("arcgis-map")
                             registry.byId("zoomprev").disabled = navToolbar.isFirstExtent();
                             registry.byId("zoomnext").disabled = navToolbar.isLastExtent();
                         }
-                        /*registry.byId("zoomin").on("click", function () {
-                            navToolbar.activate(Navigation.ZOOM_IN);
-                        });
 
-                        registry.byId("zoomout").on("click", function () {
-                            navToolbar.activate(Navigation.ZOOM_OUT);
-                        });
-
-                        registry.byId("zoomfullext").on("click", function () {
-                            navToolbar.zoomToFullExtent();
-                        });
-
-                        registry.byId("zoomprev").on("click", function () {
-                            navToolbar.zoomToPrevExtent();
-                        });
-
-                        registry.byId("zoomnext").on("click", function () {
-                            navToolbar.zoomToNextExtent();
-                        });
-
-                        registry.byId("pan").on("click", function () {
-                            navToolbar.activate(Navigation.PAN);
-                        });
-
-                        registry.byId("deactivate").on("click", function () {
-                            navToolbar.deactivate();
-                        });
-
-                        function extentHistoryChangeHandler () {
-                            registry.byId("zoomprev").disabled = navToolbar.isFirstExtent();
-                            registry.byId("zoomnext").disabled = navToolbar.isLastExtent();
-                        }*/
                     })
                 });
             },
