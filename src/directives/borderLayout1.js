@@ -345,7 +345,7 @@ angular.module("layout-util").directive("west",["$document","$timeout",function(
     };
 }]);
 
-angular.module("layout-util").directive("east",[function(){
+angular.module("layout-util").directive("east",["$document","$timeout",function($document,$timeout){
     return {
         restrict:'E',
         scope:{
@@ -356,61 +356,140 @@ angular.module("layout-util").directive("east",[function(){
         },
         transclude: true,
         controller:function($scope,$element,$attrs){
-
+            this.height = 0;
+            this.width = 0;
+            this.contentWidth = 0;
+            this.top = 0;
+            this.left = 0;
+            this.splitNeeded = false;
+            this.contentLeft = 0;
         },
         controllerAs:"eastCtrl",
         require:["^borderLayout","^east"],
         bindToController:true,
         templateUrl:"../src/template/layout/eastContainer.html",
-        link:function($scope,$element,$attrs,controller){
+        link:function($scope,$element,$attrs,controller,$transclude) {
             var borderCtrl = controller[0];
             var eastCtrl = controller[1];
 
-            $scope.$watch(function($scope){
-                return borderCtrl.width;
-            },function(newvalue){
-                layout();
-            });
-
-
-
-            $scope.$watch('eastCtrl.collapsed', function(value){
-
-                    borderCtrl.eastCollapsed = value;
-                    layout();
-
-            });
-
-
-
-            function layout(){
-                console.log(eastCtrl.size);
-                console.log(borderCtrl.height);
-                console.log(borderCtrl.width);
-
-                //Calculate East width
-                $scope.eastWidth = borderCtrl.eastWidth = eastCtrl.size;
-                borderCtrl.eastCollapsed = eastCtrl.collapsed;
-
-                $scope.eastHeight = borderCtrl.eastHeight = borderCtrl.height - borderCtrl.northHeight - borderCtrl.southHeight;
-                //Calculate East content height
-                var calEastHeight = 0;
-                if(eastCtrl.split == "true"){
-                    calEastHeight = eastCtrl.size - 5;
-                }else{
-                    calEastHeight = eastCtrl.size;
-                }
-                $scope.contentHeight = calEastHeight;
-                if(eastCtrl.collapsed == "true"){
-                    $scope.eastWidth = 0;
-                    $scope.contentHeight =0;
-                }
-                //Calculate west Top
-                $scope.eastTop = borderCtrl.northHeight;
-                //Calculate North Left
-                $scope.eastRight = 0;
+            if(eastCtrl.split == "true"){
+                eastCtrl.splitNeeded = true;
             }
 
+            var parentHeight = 0;
+
+            //If parent height is changed, layout again
+            $scope.$watch(function($scope){
+                return borderCtrl.height;
+            },function(newValue){
+                if(newValue && newValue > 0) {
+                    parentHeight = newValue;
+                    layout();
+                }
+            });
+
+            $scope.$watch("eastCtrl.collapsed",function(newValue){
+                if(newValue == "true"){
+                    $element.css("display","none");
+                    borderCtrl.eastSize = 0;
+
+                }else if(newValue == "false"){
+                    $element.css("display","block");
+                    borderCtrl.eastSize = eastCtrl.size;
+
+                }
+
+            });
+
+
+            //If scope size is changed, layout again
+            //$scope.$watch("size",function(newValue){
+            //    console.log("New Value:"+newValue);
+            //});
+
+            //$transclude content and set height and width, assuming content can receive it via scope
+            var transcludedContent,transclusionScope;
+            $transclude(function(clone,scope){
+
+
+                $element.find("#contentPart").append(clone);
+                transclusionScope = scope;
+                transcludedContent = clone;
+            });
+
+            function layout(){
+                eastCtrl.top = 0;
+
+                eastCtrl.right = 0;
+                eastCtrl.height = parentHeight;
+                borderCtrl.eastSize = eastCtrl.width = eastCtrl.size;
+                eastCtrl.contentWidth = eastCtrl.size;
+                if(eastCtrl.splitNeeded){
+                    //subtract splitter width
+                    eastCtrl.contentWidth = eastCtrl.size - 5;
+                    eastCtrl.contentLeft = 5;
+                }
+
+
+                transclusionScope.height = eastCtrl.height;
+                transclusionScope.width = eastCtrl.contentWidth;
+
+                //Child may have isolated scope - set height and width attribute ?? Not Sure will it work or not
+                transcludedContent.attr('height',eastCtrl.height);
+                transcludedContent.attr('width',eastCtrl.contentWidth);
+
+                //It might be non angular DOM element- set css property
+                transcludedContent.css({
+                    height:eastCtrl.height,
+                    width:eastCtrl.contentWidth
+                });
+            }
+
+            var dragReleased;
+            //Splitter resize
+            $scope.activateSplitter = function($event){
+
+                var newElem = $event.target;
+
+                $event.preventDefault();
+
+
+                $document.on('mousemove', mousemove);
+                $document.on('mouseup', mouseup);
+
+
+
+                function mousemove(event) {
+                    console.log("Offset:"+borderCtrl.width+ " - Mouse Pos"+event.pageX);
+                    $(newElem).css({
+
+                        left:  -((borderCtrl.width - event.pageX) -  eastCtrl.contentWidth) + 'px'
+                    });
+                    dragReleased=true;
+                }
+
+                function mouseup(event) {
+                    $document.off('mousemove', mousemove);
+                    $document.off('mouseup', mouseup);
+                    if(dragReleased) {
+                        $timeout(function(){
+                            var pageX = borderCtrl.width - event.pageX;
+                            eastCtrl.size = pageX+5;
+                            layout();
+                            borderCtrl.eastSize = pageX+ 10;
+
+                            $(newElem).css({
+
+                                left:  (0) + 'px'
+                            });
+
+                        },0);
+
+
+                        dragReleased=false;
+                    }
+                }
+            };
 
 
         }
@@ -445,7 +524,7 @@ angular.module("layout-util").directive("centerPortion",["$document","$timeout",
             $scope.$watch(function($scope){
                 return borderCtrl.height;
             },function(newValue){
-                if(newValue && newValue > 0) {
+                if(newValue != undefined) {
                     layout();
                 }
             });
@@ -453,13 +532,21 @@ angular.module("layout-util").directive("centerPortion",["$document","$timeout",
             $scope.$watch(function($scope){
                 return borderCtrl.width;
             },function(newValue){
-                if(newValue && newValue > 0) {
+                if(newValue != undefined) {
                     layout();
                 }
             });
 
             $scope.$watch(function($scope){
                 return borderCtrl.westSize;
+            },function(newValue){
+                if(newValue != undefined) {
+                    layout();
+                }
+            });
+
+            $scope.$watch(function($scope){
+                return borderCtrl.eastSize;
             },function(newValue){
                 if(newValue != undefined) {
                     layout();
@@ -477,23 +564,33 @@ angular.module("layout-util").directive("centerPortion",["$document","$timeout",
             });
 
             function layout(){
+                var eastSize = 0;
+                if(borderCtrl.eastSize != undefined){
+                    eastSize = borderCtrl.eastSize;
+                }
+                var westSize = 0;
+                if(borderCtrl.westSize != undefined){
+                    westSize = borderCtrl.westSize;
+                }
+
                 ctrl.top = 0;
-                ctrl.left = borderCtrl.westSize;
+                ctrl.left = westSize;
                 ctrl.height = borderCtrl.height;
-                ctrl.width = borderCtrl.width - borderCtrl.westSize;
+
+                ctrl.width = borderCtrl.width - westSize - eastSize;
 
 
                 transclusionScope.height = ctrl.height;
-                transclusionScope.width = ctrl.contentWidth;
+                transclusionScope.width = ctrl.width;
 
                 //Child may have isolated scope - set height and width attribute ?? Not Sure will it work or not
                 transcludedContent.attr('height',ctrl.height);
-                transcludedContent.attr('width',ctrl.contentWidth);
+                transcludedContent.attr('width',ctrl.width);
 
                 //It might be non angular DOM element- set css property
                 transcludedContent.css({
                     height:ctrl.height,
-                    width:ctrl.contentWidth
+                    width:ctrl.width
                 })
 
                 $scope.$broadcast("centerChangeEvent");

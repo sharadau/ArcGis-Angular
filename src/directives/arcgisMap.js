@@ -23,7 +23,7 @@ angular.module("arcgis-map")
                     }
                     //$element.parent().css( "height", ($window.innerHeight - 64)+"px" );
 
-                    $element.append("<div style='width:100%;height:100%;' id="+$attrs.mapid+"></div>");
+                    $element.append("<div style='width:100%;height:90%;' id="+$attrs.mapid+"></div>");
                 }
 
             },
@@ -132,10 +132,38 @@ angular.module("arcgis-map")
 
 
                 /*Created esri map object using esri/map library*/
-                require(["esri/map"],function(Map){
+                require(["esri/map"],function(Map,Scalebar){
 
                     var map = new Map($attrs.mapid,mapOptions);
                     mapDeferred.resolve(map);
+
+
+                    //Add ScaleBar if set
+                    if($attrs.scalebar == "true"){
+                        require(["esri/dijit/Scalebar"],function(Scalebar){
+                            var scalebar = new Scalebar({
+                                map: map,
+                                scalebarStyle:"ruler",
+                                attachTo: "bottom-left"
+
+                            });
+                        })
+                    }
+
+                    //Overview Map
+                    if($attrs.overviewmap == "true"){
+                        require(["esri/dijit/OverviewMap"],function(OverviewMap){
+                            var overviewMapDijit = new OverviewMap({
+                                map: map,
+                                attachTo: "bottom-right",
+                                visible:true
+
+                            });
+                            overviewMapDijit.startup();
+                        })
+                    }
+
+
 
                 });
 

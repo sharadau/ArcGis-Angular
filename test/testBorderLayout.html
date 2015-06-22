@@ -2,7 +2,7 @@
 <html ng-app="myApp">
 <head lang="en">
     <meta charset="UTF-8">
-    <title>ArcGIS Map</title>
+    <title>Quantum Spatial</title>
     <link rel="stylesheet" href="http://js.arcgis.com/3.13/esri/css/esri.css">
     <link rel="stylesheet" href="../src/style/materialize/css/materialize.css">
     <link rel="stylesheet" href="../src/style/arcgis-angular-material.css">
@@ -22,18 +22,18 @@
 </head>
 <body ng-controller="MapController">
 
-<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+<!--<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
     <a class="btn-floating btn-large red">
         <i class="large mdi-editor-mode-edit"></i>
     </a>
     <ul>
 
-        <li><a class="btn-floating yellow darken-1"><i class="large mdi-editor-format-quote"></i></a></li>
+        <li><a class="btn-floating yellow darken-1 tooltipped" data-position="left" data-delay="50" data-tooltip="I am tooltip"><i class="large mdi-editor-format-quote"></i></a></li>
         <li><a class="btn-floating green"><i class="large mdi-editor-publish"></i></a></li>
         <li><a class="btn-floating blue"><i class="large mdi-editor-attach-file"></i></a></li>
 
     </ul>
-</div>
+</div>-->
 <ul id="appModuleDropDown" class="dropdown-content">
     <li><a href="#!">Dashboard</a></li>
     <li><a href="#!">Admin</a></li>
@@ -45,6 +45,8 @@
     <li><a href="#!">Dashboard</a></li>
     <li><a href="#!">Admin</a></li>
     <li class="divider"></li>
+    <li><a href="#!">Widget Setting</a></li>
+    <li class="divider"></li>
     <li><a href="#!">Logout</a></li>
 </ul>
 <div class="navbar-fixed">
@@ -52,30 +54,42 @@
         <div class="nav-wrapper">
             <ul class="left">
                 <li><a href="#" class="button-collapse show-on-small"><i class="large mdi-navigation-menu"></i></a></li>
-                <li><a href="#" class="brand-logo">Logo</a></li>
+                <!-- <li><a href="#" class="brand-logo"><img style="margin-top:10px;margin-left:10px;" src="../src/images/Quantum inSITELogoUpBanner_2.png"></a></li>-->
+                <li><a href="#" style="padding-left:10px;" class="brand-logo">Quantum Insite</a></li>
             </ul>
             <ul class="right hide-on-med-and-down">
-                <li><a class="dropdown-button waves-effect" href="#!" data-activates="dropdown1" data-beloworigin="true">Yogesh Patel<i class="mdi-navigation-arrow-drop-down right"></i></a></li>
-               <!-- <li><a href="#"><i class="mdi-action-search"></i></a></li>-->
+                <li><a class="dropdown-button waves-effect" href="#!" data-activates="dropdown1"
+                       data-beloworigin="true">Yogesh Patel<i class="mdi-navigation-arrow-drop-down right"></i></a></li>
+                <!-- <li><a href="#"><i class="mdi-action-search"></i></a></li>-->
                 <li><a href="#" class="dropdown-button waves-effect"><i class="large mdi-content-mail"></i></a></li>
-               <!-- <li><a href="#"><i class="mdi-navigation-refresh"></i></a></li>
-                <li><a href="#"><i class="mdi-navigation-more-vert"></i></a>
-                </li>-->
-                <li><a href="#"><i class="button-collapse  mdi-navigation-more-vert" data-activates="slide-out"></i></a></li>
+                <!-- <li><a href="#"><i class="mdi-navigation-refresh"></i></a></li>
+                 <li><a href="#"><i class="mdi-navigation-more-vert"></i></a>
+                 </li>-->
+                <li><a href="#"><i class="button-collapse  mdi-navigation-more-vert" data-activates="slide-out"></i></a>
+                </li>
                 <!--<li><a href="#"  class="button-collapse show-on-large"><i class="mdi-navigation-menu"></i></a></li>-->
             </ul>
         </div>
     </nav>
 </div>
 <ul id="slide-out" class="right side-nav">
-    <li class="right-item"><a href="#!"><i style="float:left;" class="small mdi-maps-navigation green-text accent-2"></i><span class="right-item-label">Direction</span></a></li>
-    <li class="right-item"><a href="#!"><i style="float:left;" class="small mdi-action-search green-text accent-2"></i><span  class="right-item-label">Search</span></a></li>
-    <li class="right-item"><a href="#!"><i style="float:left;" class="small mdi-editor-format-paint green-text accent-2"></i><span class="right-item-label">Drawing</span></a></li>
-    <li class="right-item"><a href="#!"><i style="float:left;" class="small mdi-maps-directions green-text accent-2"></i><span class="right-item-label">Measurement</span></a></li>
+    <li class="right-item"><a href="#!" ng-click="selectDirection()"><i style="float:left;"
+                                                                        class="small mdi-maps-navigation green-text accent-2"></i><span
+            class="right-item-label">Direction</span></a></li>
+    <li class="right-item"><a href="#!"><i style="float:left;"
+                                           class="small mdi-action-search green-text accent-2"></i><span
+            class="right-item-label">Search</span></a></li>
+    <li class="right-item"><a href="#!" ng-click="selectDrawing()"><i style="float:left;"
+                                                                      class="small mdi-editor-format-paint green-text accent-2"></i><span
+            class="right-item-label">Drawing</span></a></li>
+    <li class="right-item"><a href="#!"><i style="float:left;"
+                                           class="small mdi-maps-directions green-text accent-2"></i><span
+            class="right-item-label">Measurement</span></a></li>
 </ul>
 <viewport>
 
     <border-layout border="false">
+
         <west size="55" collapsed="false">
             <div class="io-nav">
                 <div class="io-navigation" style="height:100%;">
@@ -109,9 +123,17 @@
                 </div>
             </div>
         </west>
+        <east size="350" split="true" collapsed="{{rightContentClosed}}">
+            <content-panel header-label="Direction" on-close="closeRightContent()" ng-show="directionselected">
+                <arcgis-directions mapid="myMapId"></arcgis-directions>
+            </content-panel>
+            <content-panel header-label="Drawing" on-close="closeRightContent()" ng-show="drawingselected">
+                <arcgis-draw-graphics mapid="myMapId" id="drawGraphics"></arcgis-draw-graphics>
+            </content-panel>
+        </east>
         <center-portion>
             <border-layout border="false">
-                <west size="400" split="true" collapsed="{{contentClosed}}">
+                <west size="350" split="true" collapsed="{{contentClosed}}">
                     <div ng-show="basemapselected">
                         <!--<arcgis-basemap-gallery mapid="myMapId" id="basemapwidget"></arcgis-basemap-gallery>-->
                         <content-panel header-label="Basemap" on-close="closeContent()">
@@ -129,11 +151,12 @@
                         </content-panel>
                     </div>
                 </west>
+
                 <center-portion>
 
                     <arcgis-map layers="map.layers" mapid="myMapId" center="map.center" zoom="map.zoom"
                                 basemap="{{map.basemap}}"
-                                options="{{map.options}}">
+                                options="{{map.options}}" scalebar="true" overviewmap="true">
 
 
                         <arcgis-dynamic-map-service-layer
@@ -148,7 +171,12 @@
 
                         </arcgis-dynamic-map-service-layer>
 
+                        <!-- <arcgis-fetaure-layer url="http://54.221.225.213/arcgis/rest/services/QuantumPlatform/Facilities/FeatureServer/2"></arcgis-fetaure-layer>-->
+                        <arcgis-dynamic-map-service-layer name="Call"
+                                                          url="http://54.221.225.213/arcgis/rest/services/QuantumPlatform/Issues/MapServer"></arcgis-dynamic-map-service-layer>
 
+                        <arcgis-dynamic-map-service-layer name="Vector Data"
+                                                          url="http://54.221.225.213/arcgis/rest/services/QuantumPlatform/VectorData/MapServer"></arcgis-dynamic-map-service-layer>
                     </arcgis-map>
                 </center-portion>
             </border-layout>
@@ -178,9 +206,11 @@
 <script src="../src/directives/arcgisGeocoder.js"></script>
 <script src="../src/directives/homeButton.js"></script>
 <script src="../src/directives/contentPanel.js"></script>
+<script src="../src/directives/directionsWidget.js"></script>
+<script src="../src/directives/drawGraphicsWidget.js"></script>
 
 <script>
-    $( document ).ready(function() {
+    $(document).ready(function () {
         $('.button-collapse').sideNav({
                     menuWidth: 300, // Default is 240
                     edge: 'right', // Choose the horizontal origin

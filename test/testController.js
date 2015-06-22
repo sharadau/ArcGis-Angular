@@ -4,13 +4,20 @@
 
 angular.module("myApp",["layout-util","arcgis-map"])
     .controller('MapController', function ($scope) {
-        $scope.basemapselected = true;
+        $scope.basemapselected = false;
         $scope.legendselected = false;
-        $scope.layerseleted = false;
+        $scope.layerseleted = true;
+
+
+        //Right Panels
+        $scope.directionselected = false;
+        $scope.drawingselected = false;
 
         $scope.collapsedRight = true;
 
         $scope.contentClosed = false;
+
+        $scope.rightContentClosed = true;
 
 
 
@@ -23,6 +30,14 @@ angular.module("myApp",["layout-util","arcgis-map"])
             $scope.basemapselected = false;
             $scope.legendselected = false;
             $scope.layerseleted = false;
+        }
+
+        $scope.closeRightContent = function(){
+            $scope.rightContentClosed = true;
+        }
+
+        $scope.openRightContent = function(){
+            $scope.rightContentClosed = false;
         }
 
         $scope.openContent = function(){
@@ -71,6 +86,18 @@ angular.module("myApp",["layout-util","arcgis-map"])
             $scope.legendselected = false;
             $scope.layerseleted = true;
         };
+
+        $scope.selectDirection = function(){
+            $scope.openRightContent();
+            $scope.directionselected = true;
+            $scope.drawingselected = false;
+        }
+
+        $scope.selectDrawing = function(){
+            $scope.openRightContent();
+            $scope.directionselected = false;
+            $scope.drawingselected = true;
+        }
 
     });
 
