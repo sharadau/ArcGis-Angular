@@ -21,10 +21,26 @@ angular.module("arcgis-map")
                     if($document[0].getElementById($attrs.mapid)){
                         throw new Error('ID already exists!')
                     }
-                    $element.parent().css( "height", ($window.innerHeight - 64)+"px" );
+                    //$element.parent().css( "height", ($window.innerHeight - 64)+"px" );
 
                     $element.append("<div style='width:100%;height:100%;' id="+$attrs.mapid+"></div>");
                 }
+
+            },
+            link:function($scope,$element,$attrs){
+                $scope.$watch(function($scope){
+                    return $element.parent().width();
+                },function(newvalue){
+                    mapRegistry.get($attrs.mapid);
+
+                });
+
+                $scope.$watch(function($scope){
+                    return $element.parent().height();
+                },function(newvalue){
+
+
+                });
 
             },
             controller:function($scope,$element,$attrs){
@@ -185,6 +201,13 @@ angular.module("arcgis-map")
                                 $scope.inputChangeFlag = false;
                             },0);
                         });
+                    });
+
+
+                    //How to rid it
+                    $scope.$on("centerChangeEvent",function(event,size){
+                        map.resize();
+                        //console.log("H:"+size.height);
                     });
                 });
 

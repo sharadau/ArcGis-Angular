@@ -6,23 +6,25 @@
     <link rel="stylesheet" href="http://js.arcgis.com/3.13/esri/css/esri.css">
     <link rel="stylesheet" href="../src/style/materialize/css/materialize.css">
     <link rel="stylesheet" href="../src/style/arcgis-angular-material.css">
+    <link rel="stylesheet" href="./testapp.css">
     <style>
-       /* html{
-            height: 100%;
-        }
-        body {
-            min-height: 100%;
-            overflow: hidden;
-        }*/
+        /* html{
+             height: 100%;
+         }
+         body {
+             min-height: 100%;
+             overflow: hidden;
+         }*/
 
 
     </style>
 </head>
-<body ng-controller="MapController">
+<body ng-controller="MapController as mapCtrl ">
 <ul id="slide-out" class="right side-nav collection">
     <li class="collection-item avatar">
         <i class="mdi-action-assessment circle green"></i>
         <span class="title">Search</span>
+
         <p>
             Layers<br>Features
         </p>
@@ -31,6 +33,7 @@
     <li class="collection-item avatar">
         <i class="mdi-av-play-arrow circle red"></i>
         <span class="title">Direction</span>
+
         <p>Shortest Path <br>
             Truck
         </p>
@@ -38,6 +41,7 @@
     </li>
     <li class="collection-item avatar"><i class="mdi-file-folder circle"></i>
         <span class="title">Layers</span>
+
         <p>First Line <br>
             Second Line
         </p>
@@ -61,23 +65,49 @@
     <nav>
         <div class="nav-wrapper">
             <ul class="left">
-             <li><a href="#" ng-click="setHideLeft()"><i class="large mdi-navigation-menu"></i></a></li>
-             <li><a href="#" class="brand-logo">Logo</a></li>
+                <li><a href="#" ng-click="setHideLeft()"><i class="large mdi-navigation-menu"></i></a></li>
+                <li><a href="#" class="brand-logo">Logo</a></li>
             </ul>
             <ul class="right hide-on-med-and-down">
 
                 <li><a href="#"><i class="mdi-action-search"></i></a></li>
                 <li><a href="#"><i class="mdi-action-view-module"></i></a></li>
                 <li><a href="#"><i class="mdi-navigation-refresh"></i></a></li>
-                <li><a href="#"><i data-activates="slide-out" class="button-collapse mdi-navigation-more-vert"></i></a></li>
+                <li><a href="#"><i data-activates="slide-out" class="button-collapse mdi-navigation-more-vert"></i></a>
+                </li>
                 <!--<a href="#" data-activates="slide-out" class="button-collapse show-on-large"><i class="mdi-navigation-menu"></i></a>-->
             </ul>
         </div>
     </nav>
 </div>
-<div class="row">
+<div class="app-container">
+    <div class="io-nav">
+        <div class="io-navigation" style="height:665px;">
+            <a href="#section-1" class="io-navigation-item waves-effect">
+                <i class="small mdi-maps-layers red-text accent-2"></i>
 
-    <div class="col s12 m4 l3" ng-hide="hideleft"> <!-- Note that "m4 l3" was added -->
+            </a>
+            <a href="#section-2" class="io-navigation-item waves-effect">
+                <i class="small mdi-maps-map purple-text accent-2"></i>
+
+            </a>
+            <a href="#section-3" ng-click="app.toSection2()" class="io-navigation-item waves-effect">
+                <i class="small mdi-action-search green-text accent-2"></i>
+
+            </a>
+            <a href="#section-4" ng-click="app.toSection2()" class="io-navigation-item waves-effect">
+                <i class="small mdi-av-equalizer blue-text accent-2"></i>
+
+            </a>
+            <a href="#section-5" ng-click="app.toSection2()" class="io-navigation-item waves-effect">
+                <i class="small mdi-social-school amber-text darken-3"></i>
+
+            </a>
+
+        </div>
+    </div>
+
+    <!--<div class="col s12 m4 l3" ng-hide="hideleft">
 
         <div class="col s12">
             <ul class="tabs">
@@ -98,57 +128,49 @@
         </div>
 
 
-    </div>
+    </div>-->
 
-    <div ng-class="hideleft ? 'col s12 m8 l12' : 'col s12 m8 l9'"> <!-- Note that "m8 l9" was added -->
+    <div class="map-container"> <!-- Note that "m8 l9" was added -->
         <arcgis-map layers="map.layers" mapid="myMapId" center="map.center" zoom="map.zoom" basemap="{{map.basemap}}"
                     options="{{map.options}}">
             <arcgis-home-button mapid="myMapId"></arcgis-home-button>
 
-           <!-- <arcgis-fetaure-layer
-                    url="http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0">
+            <!-- <arcgis-fetaure-layer
+                     url="http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0">
 
-            </arcgis-fetaure-layer>
+             </arcgis-fetaure-layer>
 
-            <arcgis-fetaure-layer
-                    url="http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Portland_Parks/FeatureServer/0">
+             <arcgis-fetaure-layer
+                     url="http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Portland_Parks/FeatureServer/0">
 
-            </arcgis-fetaure-layer>
+             </arcgis-fetaure-layer>
 
-            <arcgis-fetaure-layer
-                    url="http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Hydrography/Watershed173811/MapServer/1">
+             <arcgis-fetaure-layer
+                     url="http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Hydrography/Watershed173811/MapServer/1">
 
-            </arcgis-fetaure-layer>
+             </arcgis-fetaure-layer>
 
-            <arcgis-fetaure-layer
-                    url="http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Hydrography/Watershed173811/MapServer/0">
+             <arcgis-fetaure-layer
+                     url="http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Hydrography/Watershed173811/MapServer/0">
 
-            </arcgis-fetaure-layer>-->
+             </arcgis-fetaure-layer>-->
 
 
-            <arcgis-dynamic-map-service-layer url="http://54.221.225.213/arcgis/rest/services/QuantumPlatform/Ambit_View/MapServer" name="Ambit_View">
-
-            </arcgis-dynamic-map-service-layer>
-
-            <arcgis-dynamic-map-service-layer url="http://54.221.225.213/arcgis/rest/services/QuantumPlatform/Voice/MapServer" name="Voice">
+            <arcgis-dynamic-map-service-layer
+                    url="http://54.221.225.213/arcgis/rest/services/QuantumPlatform/Ambit_View/MapServer"
+                    name="Ambit_View">
 
             </arcgis-dynamic-map-service-layer>
 
+            <arcgis-dynamic-map-service-layer
+                    url="http://54.221.225.213/arcgis/rest/services/QuantumPlatform/Voice/MapServer" name="Voice">
+
+            </arcgis-dynamic-map-service-layer>
 
 
+            <!-- <arcgis-dynamic-map-service-layer url="http://54.221.225.213/arcgis/rest/services/QuantumPlatform/Facilities/FeatureServer" name="Facilities">
 
-
-
-           <!-- <arcgis-dynamic-map-service-layer url="http://54.221.225.213/arcgis/rest/services/QuantumPlatform/Facilities/FeatureServer" name="Facilities">
-
-            </arcgis-dynamic-map-service-layer>-->
-
-
-
-
-
-
-
+             </arcgis-dynamic-map-service-layer>-->
 
 
         </arcgis-map>
