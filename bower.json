@@ -21,6 +21,7 @@
   "dependencies": {
     "angular": "~1.4.0",
     "requirejs": "~2.1.18",
-    "materialize": "~0.97.0"
+    "materialize": "~0.97.0",
+    "angular-desktop-containers": "yogesh-patel/angular-desktop-containers"
   }
 }
