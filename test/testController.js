@@ -2,7 +2,7 @@
  * Created by yogeshp on 6/12/2015.
  */
 
-angular.module("myApp",["layout-util","arcgis-map"])
+angular.module("myApp",["layout-containers","arcgis-map"])
     .controller('MapController', function ($scope) {
         $scope.basemapselected = false;
         $scope.legendselected = false;

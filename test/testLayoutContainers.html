@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="http://js.arcgis.com/3.13/esri/css/esri.css">
     <link rel="stylesheet" href="../src/style/materialize/css/materialize.css">
     <link rel="stylesheet" href="../src/style/arcgis-angular-material.css">
-    <link rel="stylesheet" href="../src/style/borderlayout.css">
+    <link rel="stylesheet" href="./style/borderlayout.css">
     <link rel="stylesheet" href="./testapp.css">
     <style>
         html {
@@ -194,7 +194,6 @@
 <script src="../bower_components/requirejs/require.js"></script>
 <script src="../bower_components/angular/angular.js"></script>
 <script src="testController.js"></script>
-<script src="../src/directives/borderLayout1.js"></script>
 <script src="../src/services/mapRegistry.js"></script>
 <script src="../src/directives/arcgisFeatureLayer.js"></script>
 <script src="../src/directives/arcgisDynamicMapServiceLayer.js"></script>
@@ -205,9 +204,10 @@
 <script src="../src/directives/basemapGallery.js"></script>
 <script src="../src/directives/arcgisGeocoder.js"></script>
 <script src="../src/directives/homeButton.js"></script>
-<script src="../src/directives/contentPanel.js"></script>
 <script src="../src/directives/directionsWidget.js"></script>
 <script src="../src/directives/drawGraphicsWidget.js"></script>
+
+<script src="./lib/angular-desktop-containers.min.js"></script>
 
 <script>
     $(document).ready(function () {

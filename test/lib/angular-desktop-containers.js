@@ -1,7 +1,8 @@
 /**
- * Created by synerzip on 19/06/15.
+ * Created by yogeshp on 23/06/15.
  */
-angular.module("layout-util",[])
+
+angular.module("layout-containers",[])
     .directive("viewport", ["$window","$compile", function ($window,$compile) {
         return {
             restrict: 'E',
@@ -46,10 +47,15 @@ angular.module("layout-util",[])
             link:function(){
                 console.log("Hello");
             }
-        }
+        };
     }]);
 
-angular.module("layout-util").directive("borderLayout",[function(){
+/**
+ * Created by yogeshp on 19/06/15.
+ */
+
+
+angular.module("layout-containers").directive("borderLayout",[function(){
     return {
         restrict:'E',
         scope:{
@@ -61,7 +67,7 @@ angular.module("layout-util").directive("borderLayout",[function(){
         transclude: true,
         bindToController:true,
         controllerAs:"borderCtrl",
-        templateUrl:"../src/template/layout/borderLayout.html",
+        templateUrl:"./templates/borderLayout.html",
         controller:function($scope,$element,$attrs){
             if(this.border == "true"){
                 this.borderNeeded = true;
@@ -94,7 +100,7 @@ angular.module("layout-util").directive("borderLayout",[function(){
     };
 }]);
 
-angular.module("layout-util").directive("north",[function(){
+angular.module("layout-containers").directive("north",[function(){
     return {
         restrict:'E',
         scope:{
@@ -109,7 +115,7 @@ angular.module("layout-util").directive("north",[function(){
         controllerAs:"northCtrl",
         require:["^borderLayout","^north"],
         bindToController:true,
-        templateUrl:"../src/template/layout/northContainer.html",
+        templateUrl:"./templates/northContainer.html",
         link:function($scope,$element,$attrs,controller){
             var borderCtrl = controller[0];
             var northCtrl = controller[1];
@@ -147,7 +153,7 @@ angular.module("layout-util").directive("north",[function(){
 
     };
 }]);
-angular.module("layout-util").directive("south",[function(){
+angular.module("layout-containers").directive("south",[function(){
     return {
         restrict:'E',
         scope:{
@@ -162,7 +168,7 @@ angular.module("layout-util").directive("south",[function(){
         controllerAs:"southCtrl",
         require:["^borderLayout","^south"],
         bindToController:true,
-        templateUrl:"../src/template/layout/southContainer.html",
+        templateUrl:"./templates/southContainer.html",
         link:function($scope,$element,$attrs,controller){
             var borderCtrl = controller[0];
             var southCtrl = controller[1];
@@ -201,7 +207,7 @@ angular.module("layout-util").directive("south",[function(){
     };
 }]);
 
-angular.module("layout-util").directive("west",["$document","$timeout",function($document,$timeout){
+angular.module("layout-containers").directive("west",["$document","$timeout",function($document,$timeout){
     return {
         restrict:'E',
         scope:{
@@ -222,7 +228,7 @@ angular.module("layout-util").directive("west",["$document","$timeout",function(
         controllerAs:"westCtrl",
         require:["^borderLayout","^west"],
         bindToController:true,
-        templateUrl:"../src/template/layout/westContainer.html",
+        templateUrl:"./templates/westContainer.html",
         link:function($scope,$element,$attrs,controller,$transclude) {
             var borderCtrl = controller[0];
             var westCtrl = controller[1];
@@ -345,7 +351,7 @@ angular.module("layout-util").directive("west",["$document","$timeout",function(
     };
 }]);
 
-angular.module("layout-util").directive("east",["$document","$timeout",function($document,$timeout){
+angular.module("layout-containers").directive("east",["$document","$timeout",function($document,$timeout){
     return {
         restrict:'E',
         scope:{
@@ -367,7 +373,7 @@ angular.module("layout-util").directive("east",["$document","$timeout",function(
         controllerAs:"eastCtrl",
         require:["^borderLayout","^east"],
         bindToController:true,
-        templateUrl:"../src/template/layout/eastContainer.html",
+        templateUrl:"./templates/eastContainer.html",
         link:function($scope,$element,$attrs,controller,$transclude) {
             var borderCtrl = controller[0];
             var eastCtrl = controller[1];
@@ -497,7 +503,7 @@ angular.module("layout-util").directive("east",["$document","$timeout",function(
     };
 }]);
 
-angular.module("layout-util").directive("centerPortion",["$document","$timeout",function($document,$timeout){
+angular.module("layout-containers").directive("centerPortion",["$document","$timeout",function($document,$timeout){
     return {
         restrict:'E',
         scope:{
@@ -513,7 +519,7 @@ angular.module("layout-util").directive("centerPortion",["$document","$timeout",
         controllerAs:"ctrl",
         require:["^borderLayout","^centerPortion"],
         bindToController:true,
-        templateUrl:"../src/template/layout/centerContainer.html",
+        templateUrl:"./templates/centerContainer.html",
         link:function($scope,$element,$attrs,controller,$transclude) {
             var borderCtrl = controller[0];
             var ctrl = controller[1];
@@ -524,7 +530,7 @@ angular.module("layout-util").directive("centerPortion",["$document","$timeout",
             $scope.$watch(function($scope){
                 return borderCtrl.height;
             },function(newValue){
-                if(newValue != undefined) {
+                if(newValue !== undefined) {
                     layout();
                 }
             });
@@ -532,7 +538,7 @@ angular.module("layout-util").directive("centerPortion",["$document","$timeout",
             $scope.$watch(function($scope){
                 return borderCtrl.width;
             },function(newValue){
-                if(newValue != undefined) {
+                if(newValue !== undefined) {
                     layout();
                 }
             });
@@ -540,7 +546,7 @@ angular.module("layout-util").directive("centerPortion",["$document","$timeout",
             $scope.$watch(function($scope){
                 return borderCtrl.westSize;
             },function(newValue){
-                if(newValue != undefined) {
+                if(newValue !== undefined) {
                     layout();
                 }
             });
@@ -548,7 +554,7 @@ angular.module("layout-util").directive("centerPortion",["$document","$timeout",
             $scope.$watch(function($scope){
                 return borderCtrl.eastSize;
             },function(newValue){
-                if(newValue != undefined) {
+                if(newValue !== undefined) {
                     layout();
                 }
             });
@@ -565,11 +571,11 @@ angular.module("layout-util").directive("centerPortion",["$document","$timeout",
 
             function layout(){
                 var eastSize = 0;
-                if(borderCtrl.eastSize != undefined){
+                if(borderCtrl.eastSize !== undefined){
                     eastSize = borderCtrl.eastSize;
                 }
                 var westSize = 0;
-                if(borderCtrl.westSize != undefined){
+                if(borderCtrl.westSize !== undefined){
                     westSize = borderCtrl.westSize;
                 }
 
@@ -591,7 +597,7 @@ angular.module("layout-util").directive("centerPortion",["$document","$timeout",
                 transcludedContent.css({
                     height:ctrl.height,
                     width:ctrl.width
-                })
+                });
 
                 $scope.$broadcast("centerChangeEvent");
             }
@@ -602,3 +608,61 @@ angular.module("layout-util").directive("centerPortion",["$document","$timeout",
 
     };
 }]);
+/**
+ * Created by yogeshp on 20/06/15.
+ */
+angular.module("layout-containers")
+    .directive("contentPanel",[function(){
+        return {
+            restrict:"E",
+            scope:{
+                height:"@",
+                width:"@",
+                border:"@",
+                bodyBorder:"@",
+                headerLabel:"@",
+                hideButtonBar:"@",
+                close:"&onClose"
+            },
+            bindToController:true,
+            controllerAs:"ctrl",
+            templateUrl:"./templates/contentPanel.html",
+            transclude: true,
+            controller:function($scope,$element,$attrs){
+                this.top = 0;
+                this.left= 0;
+                this.height = $element.parent().height();
+                this.width = $element.parent().width();
+                this.bodyHeight = 0;
+                this.buttonBarNeeded = true;
+            },
+            link:function($scope,$element,$attrs,controller,$transclude){
+                var transcludedContent,transclusionScope;
+                var ctrl = controller;
+                if(ctrl.hideButtonBar == "true"){
+                    ctrl.buttonBarNeeded = false;
+                }
+                $scope.$watch(function ($scope) {
+                    return $element.parent().height();
+                },function(newValue){
+                    ctrl.height = newValue;
+                    layout();
+                });
+
+                $scope.$watch(function ($scope) {
+                    return $element.parent().width();
+                },function(newValue){
+                    ctrl.width = newValue;
+                    layout();
+                });
+
+                function layout(){
+                    if(ctrl.buttonBarNeeded) {
+                        ctrl.bodyHeight = ctrl.height - 50 - 78;
+                    }else{
+                        ctrl.bodyHeight = ctrl.height - 50;
+                    }
+                }
+            }
+        };
+    }]);
