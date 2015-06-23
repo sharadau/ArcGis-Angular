@@ -20,6 +20,7 @@
   ],
   "dependencies": {
     "angular": "~1.4.0",
-    "requirejs": "~2.1.18"
+    "requirejs": "~2.1.18",
+    "materialize": "~0.97.0"
   }
 }
