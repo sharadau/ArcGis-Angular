@@ -1,5 +1,5 @@
 # Materialize Angular ArcGIS Widgets
-Angular directives to build Esri application in material design. Following directive are available:
+Angular directives (material design guidline) to build Esri application in material design. Following directive are available:
 
 - Map
 - ArcGISDynamicMapServiceLayer
