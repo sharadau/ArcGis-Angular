@@ -1,4 +1,4 @@
-# Materialize Angular ArcGIS Widgets
+# Angular ArcGIS Widgets (Materialize View)
 Angular directives (material design guidline) to build Esri application in material design. Following directive are available:
 
 - Map
