@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Quantum Spatial</title>
+    <link rel="stylesheet" href="http://js.arcgis.com/3.13/esri/css/esri.css">
+    <link rel="stylesheet" href="../bower_components/materialize/dist/css/materialize.min.css">
+    <link rel="stylesheet" href="../src/style/arcgis-angular-material.css">
+    <link rel="stylesheet" href="./style/borderlayout.css">
+    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="dragDrop.css">
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            min-height: 100%;
+            overflow: hidden;
+        }
+
+    </style>
+</head>
+<body ng-controller="MapController">
+
+<ul id="appModuleDropDown" class="dropdown-content">
+    <li><a href="#!">Dashboard</a></li>
+    <li><a href="#!">Admin</a></li>
+
+    <li class="divider"></li>
+    <li><a href="#!">Logout</a></li>
+</ul>
+<ul id="dropdown1" class="dropdown-content">
+    <li><a href="#!">Dashboard</a></li>
+    <li><a href="#!">Admin</a></li>
+    <li class="divider"></li>
+    <li><a href="#!">Widget Setting</a></li>
+    <li class="divider"></li>
+    <li><a href="#!">Logout</a></li>
+</ul>
+<div class="navbar-fixed">
+    <nav>
+        <div class="nav-wrapper">
+            <ul class="left">
+                <li><a href="#" class="button-collapse show-on-small"><i class="large mdi-navigation-menu"></i></a></li>
+                <!-- <li><a href="#" class="brand-logo"><img style="margin-top:10px;margin-left:10px;" src="../src/images/Quantum inSITELogoUpBanner_2.png"></a></li>-->
+                <li><a href="#" style="padding-left:10px;" class="brand-logo">Test App</a></li>
+            </ul>
+            <ul class="right hide-on-med-and-down">
+                <li><a class="dropdown-button waves-effect" href="#!" data-activates="dropdown1"
+                       data-beloworigin="true">Yogesh Patel<i class="mdi-navigation-arrow-drop-down right"></i></a></li>
+                <!-- <li><a href="#"><i class="mdi-action-search"></i></a></li>-->
+                <li><a href="#" class="dropdown-button waves-effect"><i class="large mdi-content-mail"></i></a></li>
+                <!-- <li><a href="#"><i class="mdi-navigation-refresh"></i></a></li>
+                 <li><a href="#"><i class="mdi-navigation-more-vert"></i></a>
+                 </li>-->
+                <li><a href="#"><i class="button-collapse  mdi-navigation-more-vert" data-activates="slide-out"></i></a>
+                </li>
+                <!--<li><a href="#"  class="button-collapse show-on-large"><i class="mdi-navigation-menu"></i></a></li>-->
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<ul id="slide-out" class="right">
+
+</ul>
+<viewport>
+
+    <border-layout border="false">
+
+        <west size="300" collapsed="false">
+            <div class="io-nav">
+
+                    <div class="typesDemo row" style="width: 100%;">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+
+                        </div>
+                        <div class="panel-body">
+                            <ul dnd-list="leftWidgets.people"
+                                dnd-allowed-types="leftWidgets.allowedTypes"
+                                dnd-disable-if="leftWidgets.people.length >= leftWidgets.max">
+
+                                <li ng-repeat="person in leftWidgets.people"
+                                    dnd-draggable="person"
+                                    dnd-type="person.type"
+                                    dnd-disable-if="person.type == 'unknown'"
+                                    dnd-moved="leftWidgets.people.splice($index, 1)"
+                                    dnd-effect-allowed="move"
+                                    class="background-{{person.type}}"
+                                    ng-class="person.selected ? 'io-navigation-item active waves-effect' :'io-navigation-item waves-effect'"
+                                    ng-click="selectLeft(item.id)">
+                                    <i class="small {{person.iconClass}}"></i>
+
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                        </div>
+
+                </div>
+            </div>
+        </west>
+        <east size="350" split="true">
+            <div class="typesDemo row">
+                <div class="panel panel-info">
+
+                    <div class="panel-body">
+                        <ul dnd-list="rightWidgets.people"
+                            dnd-allowed-types="rightWidgets.allowedTypes"
+                            dnd-disable-if="rightWidgets.people.length >= rightWidgets.max">
+
+                            <li ng-repeat="person in rightWidgets.people"
+                                dnd-draggable="person"
+                                dnd-type="person.type"
+                                dnd-disable-if="person.type == 'unknown'"
+                                dnd-moved="rightWidgets.people.splice($index, 1)"
+                                dnd-effect-allowed="move"
+                                class="background-{{person.type}}"
+                                    >
+                                <i class="small {{person.iconClass}}"> {{person.name}}</i>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </east>
+        <center-portion>
+            <border-layout border="false">
+
+                <center-portion>
+                    <div class="typesDemo row">
+                        <div ng-repeat="list in lists" class="col-md-4">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Widgets</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <ul dnd-list="list.people"
+                                        dnd-allowed-types="list.allowedTypes"
+                                        dnd-disable-if="list.people.length >= list.max">
+
+                                        <li ng-repeat="person in list.people"
+                                            dnd-draggable="person"
+                                            dnd-type="person.type"
+                                            dnd-disable-if="person.type == 'unknown'"
+                                            dnd-moved="list.people.splice($index, 1)"
+                                            dnd-effect-allowed="move"
+                                            class="background-{{person.type}}"
+                                                >
+                                            <i class="small {{person.iconClass}}"> {{person.name}}</i>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8" view-source="types"></div>
+
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">List Models</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <pre class="code">{{modelAsJson}}</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </center-portion>
+            </border-layout>
+        </center-portion>
+
+    </border-layout>
+
+
+</viewport>
+
+
+<script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/materialize/dist/js/materialize.min.js"></script>
+<script src="http://js.arcgis.com/3.13/"></script>
+<script src="../bower_components/requirejs/require.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="app.js"></script>
+<script src="angular-drag-and-drop-lists.js"></script>
+<script src="../src/services/mapRegistry.js"></script>
+<script src="../src/directives/arcgisFeatureLayer.js"></script>
+<script src="../src/directives/arcgisDynamicMapServiceLayer.js"></script>
+<script src="../src/directives/arcgisMap.js"></script>
+<script src="../src/directives/layerWidget.js"></script>
+<script src="../src/directives/layerItem.js"></script>
+<script src="../src/directives/arcgisLegends.js"></script>
+<script src="../src/directives/basemapGallery.js"></script>
+<script src="../src/directives/arcgisGeocoder.js"></script>
+<script src="../src/directives/homeButton.js"></script>
+<script src="../src/directives/directionsWidget.js"></script>
+<script src="../src/directives/drawGraphicsWidget.js"></script>
+
+<script src="./lib/angular-desktop-containers.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.button-collapse').sideNav({
+                    menuWidth: 300, // Default is 240
+                    edge: 'right', // Choose the horizontal origin
+                    closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                }
+        );
+    });
+
+</script>
+
+
+</body>
+</html>
