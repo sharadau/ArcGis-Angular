@@ -54,20 +54,16 @@
         <div class="nav-wrapper">
             <ul class="left">
                 <li><a href="#" class="button-collapse show-on-small"><i class="large mdi-navigation-menu"></i></a></li>
-                <!-- <li><a href="#" class="brand-logo"><img style="margin-top:10px;margin-left:10px;" src="../src/images/Quantum inSITELogoUpBanner_2.png"></a></li>-->
+
                 <li><a href="#" style="padding-left:10px;" class="brand-logo">Test App</a></li>
             </ul>
             <ul class="right hide-on-med-and-down">
                 <li><a class="dropdown-button waves-effect" href="#!" data-activates="dropdown1"
                        data-beloworigin="true">Yogesh Patel<i class="mdi-navigation-arrow-drop-down right"></i></a></li>
-                <!-- <li><a href="#"><i class="mdi-action-search"></i></a></li>-->
                 <li><a href="#" class="dropdown-button waves-effect"><i class="large mdi-content-mail"></i></a></li>
-                <!-- <li><a href="#"><i class="mdi-navigation-refresh"></i></a></li>
-                 <li><a href="#"><i class="mdi-navigation-more-vert"></i></a>
-                 </li>-->
                 <li><a href="#"><i class="button-collapse  mdi-navigation-more-vert" data-activates="slide-out"></i></a>
                 </li>
-                <!--<li><a href="#"  class="button-collapse show-on-large"><i class="mdi-navigation-menu"></i></a></li>-->
+
             </ul>
         </div>
     </nav>
@@ -93,40 +89,20 @@
         <west size="55" collapsed="false">
             <div class="io-nav">
                 <div class="io-navigation" style="height:100%;">
-                    <a href="#"
-                       ng-class="layerseleted ? 'io-navigation-item active waves-effect' :'io-navigation-item waves-effect'"
-                       ng-click="selectLayers()">
-                        <i class="small mdi-maps-layers red-text accent-2"></i>
+
+                    <a ng-repeat= "item in widgetConfigs.leftNavItems" href="#"
+                       ng-class="item.selected ? 'io-navigation-item active waves-effect' :'io-navigation-item waves-effect'"
+                       ng-click="selectLeft(item.id)">
+                        <i class="small {{item.iconClass}}"></i>
 
                     </a>
-                    <a href="#"
-                       ng-class="legendselected ? 'io-navigation-item active waves-effect' :'io-navigation-item waves-effect'"
-                       ng-click="selectLegend()">
-                        <i class="small mdi-maps-map purple-text accent-2"></i>
-
-                    </a>
-                    <a href="#"
-                       ng-class="basemapselected ? 'io-navigation-item active waves-effect' :'io-navigation-item waves-effect'"
-                       ng-click="selectBaseMap()">
-                        <i class="small mdi-maps-satellite green-text accent-2"></i>
-
-                    </a>
-                    <a href="#" class="io-navigation-item waves-effect">
-                        <i class="small mdi-av-equalizer blue-text accent-2"></i>
-
-                    </a>
-                    <a href="#" class="io-navigation-item waves-effect">
-                        <i class="small mdi-social-school amber-text darken-3"></i>
-
-                    </a>
-
                 </div>
             </div>
         </west>
         <east size="350" split="true" collapsed="{{rightContentClosed}}">
-            <content-panel header-label="Direction" on-close="closeRightContent()" ng-show="directionselected">
+            <!--<content-panel header-label="Direction" on-close="closeRightContent()" ng-show="directionselected">
                 <arcgis-directions mapid="myMapId"></arcgis-directions>
-            </content-panel>
+            </content-panel>-->
             <content-panel header-label="Drawing" on-close="closeRightContent()" ng-show="drawingselected">
                 <arcgis-draw-graphics mapid="myMapId" id="drawGraphics"></arcgis-draw-graphics>
             </content-panel>
@@ -134,22 +110,23 @@
         <center-portion>
             <border-layout border="false">
                 <west size="350" split="true" collapsed="{{contentClosed}}">
-                    <div ng-show="basemapselected">
-                        <!--<arcgis-basemap-gallery mapid="myMapId" id="basemapwidget"></arcgis-basemap-gallery>-->
-                        <content-panel header-label="Basemap" on-close="closeContent()">
-                            <arcgis-basemap-gallery mapid="myMapId" id="basemapwidget"></arcgis-basemap-gallery>
-                        </content-panel>
-                    </div>
-                    <div ng-show="legendselected">
-                        <content-panel header-label="Legend" on-close="closeContent()">
-                            <arcgis-legend mapid="myMapId" id="legendId"></arcgis-legend>
-                        </content-panel>
-                    </div>
-                    <div ng-show="layerseleted">
-                        <content-panel header-label="Layers" on-close="closeContent()">
-                            <layer-widget mapid="myMapId" id="layerWidget"></layer-widget>
-                        </content-panel>
-                    </div>
+
+                            <!--<content-panel header-label="Legend" on-close="closeContent()" ng-if="basemapselected">
+                                <arcgis-basemap-gallery mapid="myMapId" id="basemapid"></arcgis-basemap-gallery>
+                            </content-panel>
+                            <content-panel header-label="Legend" on-close="closeContent()" ng-if="legendselected">
+                                <arcgis-legend mapid="myMapId" id="legendId"></arcgis-legend>
+                            </content-panel>-->
+
+                            <content-panel ng-repeat= "item in widgetConfigs.leftNavItems" header-label="{{item.name}}" on-close="closeContent()" ng-show="item.selected">
+                                <layer-widget mapid="myMapId" id="layerWidget" ng-if="item.id == 'layerWidget'"></layer-widget>
+                                <arcgis-basemap-gallery mapid="myMapId" id="basemapid" ng-if="item.id == 'basemapWidget'"></arcgis-basemap-gallery>
+                                <arcgis-legend mapid="myMapId" id="legendId" ng-if="item.id == 'legendWidget'"></arcgis-legend>
+                                <arcgis-directions mapid="myMapId" ng-if="item.id == 'directionWidget'"></arcgis-directions>
+                            </content-panel>
+
+
+
                 </west>
 
                 <center-portion>
